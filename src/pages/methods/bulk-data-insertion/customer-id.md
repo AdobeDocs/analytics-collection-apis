@@ -1,0 +1,46 @@
+---
+title: Use a customer ID to identify visitors
+description: Use a customer ID as a seed to generate Experience Cloud IDs when uploading data with the Bulk Data Insertion API.
+---
+
+# Use a customer ID to identify visitors
+
+Adobe offers a way to simplify the process of generating an identifier used by the Adobe Visitor ID Service. Adobe can use one of the customer IDs in the [`setCustomerIDs`](https://experienceleague.adobe.com/en/docs/id-service/using/id-service-api/methods/setcustomerids) method as a seed for generating an Adobe Experience Cloud visitor ID for you.
+
+## Prerequisites
+
+Before using this method to identify visitors, make sure that all of the following are met:
+
+* Communicate your intent to use this feature to the team responsible for the [Bulk Data Insertion API and associated format](file-format.md). It requires coordination between this team and the Adobe Audience Manager team to provision the desired integration on the backend.
+* Only one `customerIDType` can be used as a seed per global company ID. If you attempt to set `isMCSeed` to `true` on a `customerIDType` other than the one provisioned by Adobe, it is ignored.
+
+<InlineAlert variant="info" slots="text"/>
+
+Adobe may add optional request and response members (name/value pairs) to existing API objects at any time and without notice or changes in versioning. Adobe recommends that you refer to the API documentation of any third-party tool you integrate with our APIs so that such additions are ignored in processing if not understood. If implemented properly, such additions are non-breaking changes for your implementation. Adobe will not remove parameters or add required parameters without first providing standard notification through release notes.
+
+## File requirements
+
+When uploading files to the Bulk Data Insertion API and the customer ID is the desired visitor identifier for the row, make sure that all of the following are met:
+
+* The case-sensitive `customerID.[customerIDType].id` is specified in the file's column header row. The `[customerIDType]` is Audience Manager's integration code (do not include brackets).
+* `customerID.[customerIDType].id` contains a value for each row.
+* `customerID.[customerIDType].isMCSeed` is set to `1` (true) for each row.
+
+If either of these variables is blank, Adobe falls back to other visitor identification columns. If there are no other visitor identifiers present in the row, the row is skipped. Rows that fall back to other visitor identification columns are treated as separate visitors.
+
+## Example integration workflow
+
+1. Select a field that you wish to use as a seed to generate an MCID. For example, you could choose the customer's email address.
+1. Set up an integration with Audience Manager. The seed field is your "integration code". You also give them a preferred unique salt value. We recommend using your report suite name.
+1. Audience Manager gives back to you the following fields:
+   * Partner ID (pid)
+   * Data Provider ID (dpid)
+1. Give the following values to your consultant to pass on to the BDIA team:
+   * Global Company ID
+   * Integration Code (for example, email)
+   * AAM Partner ID (pid)
+   * AAM Data Provider ID (dpid)
+   * Salt value (for example, mycompanyreportsuite)
+1. Once you are notified of successful configuration, include the following fields in your BDIA file:
+   * `customerID.email.id` (the value is a unique email address for each user)
+   * `customerID.email.isMCSeed` (the value is `1` for all rows)

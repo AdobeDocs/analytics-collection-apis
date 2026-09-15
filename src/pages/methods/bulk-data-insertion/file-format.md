@@ -1,0 +1,103 @@
+---
+title: Bulk Data Insertion API file format
+description: File and column format requirements for Adobe Analytics Bulk Data Insertion API batch uploads.
+---
+
+# Bulk Data Insertion API file format
+
+The Bulk Data Insertion API ingests data into Adobe Analytics using batch files. These files are in a specific CSV format where each row of the file contains details of a server call. Each row, or server call, must specify an identifier for a visitor as well as a timestamp for when the interaction occurred. The server calls must be ordered chronologically by their timestamps, from earliest to latest, in the batch files. Each batch file must also be compressed.
+
+<InlineAlert variant="info" slots="text"/>
+
+Adobe may add optional request and response members (name/value pairs) to existing API objects at any time and without notice or changes in versioning. Adobe recommends that you refer to the API documentation of any third-party tool you integrate with our APIs so that such additions are ignored in processing if not understood. If implemented properly, such additions are non-breaking changes for your implementation. Adobe will not remove parameters or add required parameters without first providing standard notification through release notes.
+
+## Batch file requirements
+
+Batch files must conform to all of the following requirements:
+
+* The file format is CSV, conforming to the [RFC-4180 standard](https://datatracker.ietf.org/doc/html/rfc4180) with one exception: empty lines are ignored.
+* Every file consists of a header row (the first row in the file) and subsequent data rows.
+* Header columns and fields are delimited by commas. If you have commas in values, surround the value in double quotes (`"`). If you also have double quotes in values, use double quotes inside the value. For example, `field1,"Value with ""quotes"", and a comma.",field3` - the value that appears in reporting is `Value with "quotes", and a comma.`
+* Every row must have the same number of columns as the header row. If you want to omit a column from a row, leave the field empty or pass an empty string. For example, `field1,,field3` or `field1,"",field3`.
+* Trailing commas for header rows or data rows are not permitted.
+* Each column header must be unique. If a column header is duplicated, the file is marked as invalid and an error response identifies the duplicate column. Because column headers are not case sensitive, providing `Column1` and `column1` as two separate columns is interpreted as a duplicate and results in an invalid file.
+* All rows in a batch file for any given visitor must be sorted in chronological order by `timestamp` from earliest to latest. Following this rule is crucial for attribution and analyzing visitor behavior. Adobe does not guarantee the integrity of data processed by this API if this rule is not strictly observed.
+* All batch files must be compressed using gzip compression.
+* Compressed file sizes are limited to 100 MB. Uncompressed file sizes are limited to 1 GB.
+
+Batch files are flexible in the following ways:
+
+* There are no restrictions on file names. When you submit a file to this API, Adobe returns a `file_id` that you can use to track the file. The name of the file is recorded under `upload_name` in the response object as well.
+* Adobe supports both `CRLF` and `LF` line breaks to separate rows. A line break at the end of a data file is optional.
+* Column header names are not case sensitive (with one exception for `customerIDType`; see [Use a customer ID to identify visitors](customer-id.md)).
+* Columns can appear in any order.
+* Key/value pairs in the `queryString` field are also valid in any order.
+
+## Required columns
+
+Every row must contain the following five data points. If a row misses any one of these requirements, that row is skipped.
+
+* At least one of:
+  * `visitorID`
+  * `marketingCloudVisitorID`
+  * `IPAddress`
+  * `customerID.[customerIDType].id` with `customerID.[customerIDType].isMCSeed` set to `1`. See [Use a customer ID to identify visitors](customer-id.md).
+* At least one of:
+  * `pageURL`
+  * `pageName`
+  * `linkType` with `linkName` or `linkURL`
+  * `queryString` that includes `pageURL`, `pageName`, or `linkType` as query string parameters with values
+* `reportSuiteID`
+* `timestamp`
+* `userAgent`
+
+Adobe only uses one visitor ID for a given row. If more than one visitor ID column contains data, Adobe uses the following priority to identify that visitor:
+
+1. `customerID.[customerIDType].id` with `customerID.[customerIDType].isMCSeed` set to `1`
+1. `visitorID`
+1. `marketingCloudVisitorID`
+1. `IPAddress`
+
+## Query string or column-based row
+
+Adobe offers two ways to populate rows with data.
+
+* **Use column headers**: Use a separate column for each variable.
+* **Use the `queryString` column**: Include most data in the `queryString` column. This method is particularly helpful for implementations that use data generated by AppMeasurement libraries. You can include the image request's entire query string in this column with minimal adjustments. Other columns, such as `timestamp` and `reportSuiteID`, are not included in `queryString` and are still required as separate columns.
+
+You can combine both of these methods in any amount to fill out rows with data. If a variable is present as both a query string and its column header, the column header value takes priority. For example, if the `pageName` column is `"Column header example"` and the `queryString` column contains `"pageName=Query string example"`, the value that Adobe uses is `"Column header example"`.
+
+For the full list of supported columns and their query string equivalents, see the [column reference](column-reference.md).
+
+## Batch file examples
+
+The following text blocks are examples of what a CSV file looks like with a small number of rows and columns. Both examples contain a header row with two rows of data.
+
+### Batch file using the `queryString` column
+
+```text
+timestamp,visitorid,reportsuiteid,querystring,useragent
+1492191617,44444445,examplersid,pageName=PIGINI&v2=Var21&v3=Var31&c1=val11
+&c2=val21&c3=val31&bh=1000&bw=999&c=1024&j=3.41&k=1&p=1&s=1111&v=1&channel=TestChannel
+&pev1=https%3A%2F%2Fwww.adobe.com%2Fwho%3Fq%3Dwhoisit&state=UT&zip=84005&cc=USD
+&events=prodView%2Cevent2,"Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_1) 
+AppleWebKit/537.36 (KHTML, like Gecko) Chrome/41.0.2227.1 Safari/537.36"
+1492191627,44444445,examplersid,pageName=PIGINI&v2=Var22&v3=Var32&c1=val12
+&c2=val22&c3=val32&bh=1000&bw=999&c=1024&j=3.41&k=1&p=1&s=1111&v=1&channel=TestChannel
+&pev1=https%3A%2F%2Fwww.adobe.com%2Fwho%3Fq%3Dwhoisit&state=UT&zip=84005&cc=USD
+&events=prodView%2Cevent2,"Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_1) 
+AppleWebKit/537.36 (KHTML, like Gecko) Chrome/41.0.2227.1 Safari/537.36"
+
+```
+
+### Batch file using column headers
+
+```text
+pageName,timestamp,reportSuiteID,visitorID,userAgent,campaign,contextData.color,contextData.frame,pageURL,prop1,channel
+中文网站,1495483797,examplersid,238915514,"Mozilla/5.0 (Windows NT 6.1; WOW64; rv:40.0) Gecko/20100101 Firefox/40.1 ""Special
+ Build""",Summer,Red,Titanium,http://example.com/path?param=val&param2=val2,p2,Mobile
+中文网站,1495483797,examplersid,142805255,"Mozilla/5.0 (Windows NT 6.1; WOW64; rv:40.0) Gecko/20100101 Firefox/40.1 ""Special
+ Build""",Summer,Gray,Carbon,http://example.com/path?param=val&param2=val2,p2,Mobile
+```
+
+Once you have a correctly formatted file, you can start sending calls to the available [endpoints](endpoints.md).
