@@ -1,0 +1,357 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "description": "The Bulk Data Insertion API (BDIA) allows clients to upload server call data into Adobe Analytics in batches of files. \n\n The `https://analytics-collection.adobe.io` host automatically routes calls to the best region for processing. If you are legally required to process data in a specific region, use `https://analytics-collection-us.adobe.io` (US) or `https://analytics-collection-eu.adobe.io` (Europe). \n\n Note: Adobe may add optional request and response members (name/value pairs) to existing API objects at any time and without notice or changes in versioning. Adobe recommends that you refer to the API documentation of any third-party tool you integrate with our APIs so that such additions are ignored in processing if not understood. If implemented properly, such additions are non-breaking changes for your implementation. Adobe will not remove parameters or add required parameters without first providing standard notification through release notes.",
+    "version": "1.0",
+    "title": "Bulk Data Insertion API (BDIA)"
+  },
+  "host": "analytics-collection.adobe.io",
+  "basePath": "/aa/collect/v1",
+  "tags": [
+    {
+      "name": "Events"
+    }
+  ],
+  "parameters": {
+    "authorization": {
+      "name": "Authorization",
+      "in": "header",
+      "description": "The access token from your OAuth Server-to-Server credential, prefixed with \"Bearer \".",
+      "required": true,
+      "type": "string"
+    },
+    "x-api-key": {
+      "name": "x-api-key",
+      "in": "header",
+      "description": "The Client ID (API key) from your OAuth Server-to-Server credential in the Adobe Developer Console.",
+      "required": true,
+      "type": "string"
+    }
+  },
+  "schemes": [
+    "https"
+  ],
+  "paths": {
+    "/events": {
+      "post": {
+        "tags": [
+          "Events"
+        ],
+        "summary": "Upload file for processing",
+        "description": "Upload a batch file to Analytics for processing. Uploaded files must:\n * Be 100 MB or less compressed (using gzip)\n* Follow the CSV formatting rules and include the required fields as specified in the documentation",
+        "operationId": "filePost",
+        "consumes": [
+          "multipart/form-data"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "$ref": "#/parameters/authorization"
+          },
+          {
+            "$ref": "#/parameters/x-api-key"
+          },
+          {
+            "name": "x-adobe-vgid",
+            "in": "header",
+            "description": "Visitor Group ID. A visitor group represents a bucketed group of visitor IDs that are separate from any other visitor group set. The Group ID is a string of any valid value, but must be consistent across files. See [Visitor groups](https://developer.adobe.com/analytics-collection-apis/endpoints/bulk-data-insertion/visitor-groups/) for more information.",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "x-adobe-idempotency-key",
+            "in": "header",
+            "description": "Optional. A client-generated unique reference for the upload, used for duplication protection when a request does not return a response. If omitted, it defaults to the generated file_id.",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "file",
+            "in": "formData",
+            "description": "Gzip compressed CSV file sent with request",
+            "required": true,
+            "type": "file"
+          },
+          {
+            "name": "debug",
+            "in": "query",
+            "description": "Store debug information for the first 10 hits of the file",
+            "required": false,
+            "type": "boolean",
+            "default": false
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/UploadedFileInfo"
+            }
+          },
+          "400": {
+            "description": "Request Error",
+            "schema": {
+              "$ref": "#/definitions/ApiError"
+            }
+          },
+          "401": {
+            "description": "Unauthorized Access",
+            "schema": {
+              "$ref": "#/definitions/ApiUnauthorizedError"
+            }
+          }
+        }
+      }
+    },
+    "/events/validate": {
+      "post": {
+        "tags": [
+          "Events"
+        ],
+        "summary": "Upload file for validation",
+        "description": "Upload a batch file for Analytics validation. This file is not stored on the server or processed into Analytics. Validation is only for testing file format.",
+        "operationId": "fileValidatePost",
+        "consumes": [
+          "multipart/form-data"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "$ref": "#/parameters/authorization"
+          },
+          {
+            "$ref": "#/parameters/x-api-key"
+          },
+          {
+            "name": "x-adobe-vgid",
+            "in": "header",
+            "description": "Visitor Group ID. See [Visitor groups](https://developer.adobe.com/analytics-collection-apis/endpoints/bulk-data-insertion/visitor-groups/) for more information.",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "file",
+            "in": "formData",
+            "description": "Gzip compressed CSV file sent with request",
+            "required": true,
+            "type": "file"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/ValidationResult"
+            }
+          },
+          "400": {
+            "description": "Request Error",
+            "schema": {
+              "$ref": "#/definitions/ApiError"
+            }
+          },
+          "401": {
+            "description": "Unauthorized Access",
+            "schema": {
+              "$ref": "#/definitions/ApiUnauthorizedError"
+            }
+          }
+        }
+      }
+    },
+    "/events/key/{idempotency_key}": {
+      "get": {
+        "tags": [
+          "Events"
+        ],
+        "summary": "Look up a file by idempotency key",
+        "description": "Verify whether a file was received by Adobe. Use this endpoint when a POST to the events endpoint does not return a response, to check whether the upload was received before resubmitting it.",
+        "operationId": "idempotencyKeyLookup",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "idempotency_key",
+            "in": "path",
+            "description": "The idempotency key supplied with the original upload (the x-adobe-idempotency-key value), or the generated file_id if no key was supplied.",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "$ref": "#/parameters/authorization"
+          },
+          {
+            "$ref": "#/parameters/x-api-key"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/IdempotencyLookupResult"
+            }
+          },
+          "401": {
+            "description": "Unauthorized Access",
+            "schema": {
+              "$ref": "#/definitions/ApiUnauthorizedError"
+            }
+          },
+          "404": {
+            "description": "File not found",
+            "schema": {
+              "$ref": "#/definitions/ApiError"
+            }
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "ApiError": {
+      "type": "object",
+      "properties": {
+        "error": {
+          "type": "string",
+          "example": "File not found",
+          "description": "A general request error message"
+        }
+      }
+    },
+    "ApiUnauthorizedError": {
+      "type": "object",
+      "properties": {
+        "error": {
+          "type": "string",
+          "example": "Invalid token (1)",
+          "description": "Error during authentication"
+        }
+      }
+    },
+    "ValidationResult": {
+      "type": "object",
+      "properties": {
+        "success": {
+          "type": "string",
+          "example": "File is valid",
+          "description": "A success message for validation requests"
+        },
+        "error": {
+          "type": "string",
+          "example": "File has 2 rows that do not conform to the required CSV format! (Ex: row #59)",
+          "description": "The reason a file failed validation"
+        }
+      }
+    },
+    "IdempotencyLookupResult": {
+      "type": "object",
+      "properties": {
+        "file_id": {
+          "type": "string",
+          "example": "22eea6b6-eecf-4d13-b70f-abbb8a81efa2",
+          "description": "The file ID as a GUID"
+        },
+        "size": {
+          "type": "integer",
+          "format": "int64",
+          "example": 1687458,
+          "description": "The size of the compressed file in bytes"
+        },
+        "received_date": {
+          "type": "integer",
+          "format": "int64",
+          "example": 1650323049,
+          "description": "The date the file was received, in unix epoch time"
+        },
+        "rows": {
+          "type": "integer",
+          "format": "int64",
+          "example": 10212,
+          "description": "The number of rows in the file"
+        },
+        "idempotency_key": {
+          "type": "string",
+          "description": "The idempotency key used to look up the file"
+        }
+      }
+    },
+    "UploadedFileInfo": {
+      "type": "object",
+      "properties": {
+        "file_id": {
+          "type": "string",
+          "example": "9c99f999-fca9-999c-9c99-b99aaec99e99",
+          "description": "The file ID as a GUID"
+        },
+        "visitor_group_id": {
+          "type": "string",
+          "example": "myvisitorgroup1",
+          "description": "The visitor group of the file"
+        },
+        "size": {
+          "type": "integer",
+          "format": "int64",
+          "example": 355600,
+          "description": "The size of the compressed file in bytes"
+        },
+        "received_date": {
+          "type": "integer",
+          "format": "int64",
+          "example": 1506999999,
+          "description": "The date the file was uploaded in unix epoch time."
+        },
+        "rows": {
+          "type": "integer",
+          "format": "int64",
+          "example": 10000,
+          "description": "The number of rows in the file"
+        },
+        "invalid_rows": {
+          "type": "integer",
+          "format": "int64",
+          "example": 42,
+          "description": "The number of rows not submitted to analytics for being invalid"
+        },
+        "upload_name": {
+          "type": "string",
+          "example": "myfile1.gz",
+          "description": "The file name as it was uploaded"
+        },
+        "status": {
+          "type": "string",
+          "description": "The status of the file"
+        },
+        "status_code": {
+          "type": "string",
+          "example": "UPLOADED",
+          "description": "The status of the file as a short name",
+          "enum": [
+            "REJECTED",
+            "UPLOADED",
+            "PROCESSING",
+            "COMPLETE",
+            "ERROR"
+          ]
+        },
+        "processing_log": {
+          "type": "string",
+          "description": "A log of errors produced while processing the file"
+        },
+        "idempotency_key": {
+          "type": "string",
+          "description": "Either the value of the x-adobe-idempotency-key if supplied, or the file_id"
+        },
+        "error": {
+          "type": "string",
+          "example": "File not in GZIP format",
+          "description": "An error message for unsuccessful requests"
+        }
+      }
+    }
+  }
+}

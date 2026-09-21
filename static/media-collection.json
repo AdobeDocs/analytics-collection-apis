@@ -1,0 +1,389 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "description": "The Media Collection API is a server-side, RESTful equivalent of the client-side Media SDK for tracking streaming audio and video in Adobe Analytics. A media session is composed on Adobe's servers from a `sessions` call followed by a series of `events` calls, which are aggregated into media metrics. \n\n **Endpoint host:** The host is a provisioned endpoint of the form `<company>.hb-api.omtrdc.net`. Obtain your host from your Adobe representative. The `example.hb-api.omtrdc.net` host shown here is a placeholder. \n\n **Content type:** All request bodies must be JSON. Set the `Content-Type: application/json` request header on every call. \n\n Note: Adobe may add optional request and response members (name/value pairs) to existing API objects at any time and without notice or changes in versioning. If implemented properly, such additions are non-breaking changes for your implementation. Adobe will not remove parameters or add required parameters without first providing standard notification through release notes.",
+    "version": "1.0",
+    "title": "Media Collection API"
+  },
+  "host": "example.hb-api.omtrdc.net",
+  "basePath": "/api/v1",
+  "tags": [
+    {
+      "name": "Sessions",
+      "description": "Start a media tracking session."
+    },
+    {
+      "name": "Events",
+      "description": "Send playback events to an active session."
+    },
+    {
+      "name": "Schemas",
+      "description": "Retrieve the JSON validation schema for an event type."
+    }
+  ],
+  "schemes": [
+    "https"
+  ],
+  "consumes": [
+    "application/json"
+  ],
+  "produces": [
+    "application/json"
+  ],
+  "parameters": {
+    "content-type": {
+      "name": "Content-Type",
+      "in": "header",
+      "description": "Must be `application/json`.",
+      "required": true,
+      "type": "string",
+      "default": "application/json"
+    }
+  },
+  "paths": {
+    "/sessions": {
+      "post": {
+        "tags": [
+          "Sessions"
+        ],
+        "summary": "Start a media session",
+        "description": "Starts a new media tracking session with a `sessionStart` event. On success the response returns `201 Created` with the session path in the `Location` header. Parse the trailing session ID from that header and use it in all subsequent events calls. Your app calls this once at the start of a tracking session.",
+        "operationId": "createSession",
+        "parameters": [
+          {
+            "$ref": "#/parameters/content-type"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "description": "A `sessionStart` event. The `params` object carries the required Analytics, visitor, and media parameters.",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/MediaEvent"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Session created. The session ID is returned in the `Location` response header.",
+            "headers": {
+              "Location": {
+                "type": "string",
+                "description": "The relative path of the created session, in the form `/api/v1/sessions/{sid}`. Parse the `{sid}` segment and use it for events requests."
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request. The request body did not pass validation for the event type. See the JSON validation schema for the event type.",
+            "schema": {
+              "$ref": "#/definitions/ApiError"
+            }
+          },
+          "500": {
+            "description": "Server error.",
+            "schema": {
+              "$ref": "#/definitions/ApiError"
+            }
+          }
+        }
+      }
+    },
+    "/sessions/{sid}/events": {
+      "post": {
+        "tags": [
+          "Events"
+        ],
+        "summary": "Send an event",
+        "description": "Sends a playback event — such as `play`, `ping`, `pauseStart`, `bufferStart`, `bitrateChange`, `chapterStart`, or an ad event — to an active session. The request body has the same structure as a sessions request. A successful call returns `204 No Content`; the endpoint does not return a body.",
+        "operationId": "sendEvent",
+        "parameters": [
+          {
+            "name": "sid",
+            "in": "path",
+            "description": "The session ID returned in the `Location` header of the sessions request.",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "$ref": "#/parameters/content-type"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "description": "A media tracking event.",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/MediaEvent"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "No content. The event was accepted successfully."
+          },
+          "400": {
+            "description": "Bad request. The request had an improper format. Check the JSON validation schema for the event type.",
+            "schema": {
+              "$ref": "#/definitions/ApiError"
+            }
+          },
+          "404": {
+            "description": "Not found. The session ID was not found. Start a new session with the sessions endpoint.",
+            "schema": {
+              "$ref": "#/definitions/ApiError"
+            }
+          },
+          "410": {
+            "description": "Gone. The session is closed and can no longer report activity. Start a new session with the sessions endpoint.",
+            "schema": {
+              "$ref": "#/definitions/ApiError"
+            }
+          },
+          "500": {
+            "description": "Server error.",
+            "schema": {
+              "$ref": "#/definitions/ApiError"
+            }
+          }
+        }
+      }
+    },
+    "/schemas/{eventType}": {
+      "get": {
+        "tags": [
+          "Schemas"
+        ],
+        "summary": "Get a validation schema",
+        "description": "Returns the publicly accessible JSON validation schema that the back end uses to validate the request body for a given event type. These schemas are the authority for which parameters are required or optional, and their data types.",
+        "operationId": "getSchema",
+        "parameters": [
+          {
+            "name": "eventType",
+            "in": "path",
+            "description": "The event type to retrieve the schema for, for example `sessionStart` or `ping`.",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The JSON validation schema for the requested event type.",
+            "schema": {
+              "type": "object"
+            }
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "ApiError": {
+      "type": "object",
+      "properties": {
+        "message": {
+          "type": "string",
+          "example": "Request had improper format.",
+          "description": "A description of the error."
+        }
+      }
+    },
+    "EventType": {
+      "type": "string",
+      "description": "The media tracking event type sent on the wire.",
+      "enum": [
+        "sessionStart",
+        "sessionComplete",
+        "sessionEnd",
+        "adBreakStart",
+        "adBreakComplete",
+        "adStart",
+        "adComplete",
+        "adSkip",
+        "chapterStart",
+        "chapterComplete",
+        "chapterSkip",
+        "play",
+        "ping",
+        "bufferStart",
+        "pauseStart",
+        "bitrateChange",
+        "error",
+        "stateStart",
+        "stateEnd"
+      ]
+    },
+    "PlayerTime": {
+      "type": "object",
+      "description": "The playhead position and timestamp of the event. Required on every request.",
+      "required": [
+        "playhead",
+        "ts"
+      ],
+      "properties": {
+        "playhead": {
+          "type": "number",
+          "example": 0,
+          "description": "The playhead position, in seconds."
+        },
+        "ts": {
+          "type": "integer",
+          "format": "int64",
+          "example": 1731672000000,
+          "description": "The client-side timestamp of the event, in milliseconds since the Unix epoch."
+        }
+      }
+    },
+    "Params": {
+      "type": "object",
+      "description": "Analytics, visitor, and media parameters. The required members depend on the event type; see the request parameters reference and the JSON validation schema for each event type.",
+      "properties": {
+        "analytics.trackingServer": {
+          "type": "string",
+          "example": "example.data.adobedc.net",
+          "description": "The Analytics tracking server."
+        },
+        "analytics.reportSuite": {
+          "type": "string",
+          "example": "example-rsid",
+          "description": "The Analytics report suite ID that receives the data."
+        },
+        "analytics.enableSSL": {
+          "type": "boolean",
+          "example": true,
+          "description": "Whether to send Analytics data over HTTPS."
+        },
+        "analytics.visitorId": {
+          "type": "string",
+          "description": "The Analytics visitor ID."
+        },
+        "analytics.aid": {
+          "type": "string",
+          "description": "The Analytics legacy user ID (aid)."
+        },
+        "visitor.marketingCloudOrgId": {
+          "type": "string",
+          "example": "0123456789ABCDEF0123456789@AdobeOrg",
+          "description": "The Experience Cloud organization ID."
+        },
+        "visitor.marketingCloudUserId": {
+          "type": "string",
+          "description": "The Experience Cloud ID (ECID) of the visitor."
+        },
+        "visitor.aamLocationHint": {
+          "type": "integer",
+          "description": "The Audience Manager location hint (region) for the visitor."
+        },
+        "media.id": {
+          "type": "string",
+          "example": "sample-video-id",
+          "description": "The unique content ID for the media item."
+        },
+        "media.name": {
+          "type": "string",
+          "example": "Sample video",
+          "description": "The human-friendly name of the media item."
+        },
+        "media.length": {
+          "type": "number",
+          "example": 3600,
+          "description": "The length of the content, in seconds."
+        },
+        "media.contentType": {
+          "type": "string",
+          "example": "vod",
+          "description": "The content type, for example `vod` or `live`."
+        },
+        "media.playerName": {
+          "type": "string",
+          "example": "sample-html5-player",
+          "description": "The name of the media player in use."
+        },
+        "media.channel": {
+          "type": "string",
+          "example": "sample-channel",
+          "description": "The channel or property the content plays on."
+        }
+      }
+    },
+    "QoeData": {
+      "type": "object",
+      "description": "Optional quality-of-experience data. May be sent with any event.",
+      "properties": {
+        "media.qoe.bitrate": {
+          "type": "integer",
+          "description": "The current bitrate, in bits per second."
+        },
+        "media.qoe.droppedFrames": {
+          "type": "integer",
+          "description": "The number of dropped frames."
+        },
+        "media.qoe.framesPerSecond": {
+          "type": "integer",
+          "description": "The current frame rate."
+        },
+        "media.qoe.timeToStart": {
+          "type": "integer",
+          "description": "The time, in milliseconds, from the play request until playback started."
+        },
+        "media.qoe.errorID": {
+          "type": "string",
+          "description": "An identifier for a player error."
+        },
+        "media.qoe.errorSource": {
+          "type": "string",
+          "description": "The source of the error, for example `player`."
+        }
+      }
+    },
+    "CustomMetadata": {
+      "type": "object",
+      "description": "Free-form string key-value pairs. Sent only with the `sessionStart`, `adStart`, and `chapterStart` event types. All values must be strings.",
+      "additionalProperties": {
+        "type": "string"
+      }
+    },
+    "MediaEvent": {
+      "type": "object",
+      "required": [
+        "eventType",
+        "playerTime"
+      ],
+      "properties": {
+        "eventType": {
+          "$ref": "#/definitions/EventType"
+        },
+        "playerTime": {
+          "$ref": "#/definitions/PlayerTime"
+        },
+        "params": {
+          "$ref": "#/definitions/Params"
+        },
+        "qoeData": {
+          "$ref": "#/definitions/QoeData"
+        },
+        "customMetadata": {
+          "$ref": "#/definitions/CustomMetadata"
+        }
+      },
+      "example": {
+        "playerTime": {
+          "playhead": 0,
+          "ts": 1731672000000
+        },
+        "eventType": "sessionStart",
+        "params": {
+          "analytics.trackingServer": "example.data.adobedc.net",
+          "analytics.reportSuite": "example-rsid",
+          "analytics.enableSSL": true,
+          "visitor.marketingCloudOrgId": "0123456789ABCDEF0123456789@AdobeOrg",
+          "media.id": "sample-video-id",
+          "media.name": "Sample video",
+          "media.length": 3600,
+          "media.contentType": "vod",
+          "media.playerName": "sample-html5-player",
+          "media.channel": "sample-channel"
+        }
+      }
+    }
+  }
+}
