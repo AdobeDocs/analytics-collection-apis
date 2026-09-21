@@ -1,6 +1,6 @@
 ---
 title: Formulate a Data Insertion API request
-description: How to construct a Data Insertion API request — the endpoint structure, required components, and the query-string and XML encodings.
+description: How to construct a Data Insertion API request, including — the endpoint structure, required components, and encodings.
 keywords:
   - Data Insertion API
   - Image request
@@ -28,7 +28,7 @@ https://example.data.adobedc.net/b/ss/examplersid/1/s234234238479
 * `/1/` is the [response type](response-types.md). It selects the format of the server's response, such as a 1x1 GIF. Every response type accepts both `GET` and `POST`.
 * `/s234234238479` (`"s"` followed by a random number) prevents the client from caching the request.
 
-[//]: # Fun fact: `b` is short for beacon, and `ss` is short for SuperStats, the progenitor of Adobe Analytics
+<? Fun fact: `b` is short for beacon, and `ss` is short for SuperStats, the progenitor of Adobe Analytics ?>
 
 ## Required components
 
@@ -95,9 +95,22 @@ See the [variable reference](variable-reference.md) for every supported XML tag.
 * Each supported element carries a single text value. If an element contains mixed content (nested elements alongside text), only the first child's text is used.
 * Only the standard XML entities are supported (`&amp;`, `&lt;`, `&gt;`, `&quot;`, `&apos;`). DOCTYPE declarations and custom or external entities (DTDs) are stripped and not processed.
 
-<CodeBlock slots="heading, code" repeat="2" languages="CURL,XML"/>
+<CodeBlock slots="heading, code" repeat="3" languages="CURL,CURL,XML"/>
 
-#### Request
+#### RSID in path
+
+```sh
+curl -X POST "https://example.data.adobedc.net/b/ss/examplersid/6" \
+    -H "Accept: application/xml" \
+    -H "Content-Type: application/xml" \
+    -d "<?xml version=\"1.0\" encoding=\"UTF-8\"?>
+        <request>
+            <pageURL>https://example.com</pageURL>
+            <pageName>Data Insertion API test (XML POST)</pageName>
+        </request>"
+```
+
+#### RSID in XML
 
 ```sh
 curl -X POST "https://example.data.adobedc.net/b/ss//6" \
@@ -122,7 +135,7 @@ For the `FAILURE` responses and how to resolve them, see [Validation and failure
 
 ## Visitor identification
 
-Because you build each hit yourself, you set the visitor identifier rather than relying on a library to manage it. Adobe data collection servers always attempt to set a cookie containing the visitor identifier. Some [response types](response-types.md) (`/10/` and `/11/`) include the visitor identifier in the response as well. For the full client-side and server-side patterns, see [Visitor identification using the Data Insertion API](https://experienceleague.adobe.com/en/docs/analytics/implementation/id/data-insertion).
+Because you build each hit yourself, you set the visitor identifier rather than relying on a library to manage it. Adobe data collection servers always attempt to set a cookie containing the visitor identifier. Some [response types](response-types.md) (`/10/` and `/11/`) include the Adobe-generated visitor identifier in the response as well. For the full client-side and server-side patterns, see [Visitor identification using the Data Insertion API](https://experienceleague.adobe.com/en/docs/analytics/implementation/id/data-insertion).
 
 ## FAQ
 
@@ -158,7 +171,7 @@ See [HTML URL Encoding Reference](https://www.w3schools.com/tags/ref_urlencode.a
 
 ### What is the maximum number of characters a single value can have?
 
-Each variable has a different maximum length. Most traffic variables hold up to 100 bytes, while most conversion variables hold up to 255 bytes. When a request reaches data collection servers, Adobe automatically truncates these values to their maximum length.
+Each variable has a different maximum length. Most traffic variables hold up to 100 bytes, while most conversion variables hold up to 255 bytes. When a request reaches data collection servers, Adobe automatically truncates these values to their maximum length. See [Data column reference](https://experienceleague.adobe.com/en/docs/analytics/export/analytics-data-feed/data-feed-contents/datafeeds-reference) for a comprehensive list of data types for each variable.
 
 <AccordionItem slots="heading, text"/>
 
@@ -170,7 +183,7 @@ Data submitted through the Data Insertion API follows the standard Adobe Analyti
 
 ### Can I track email opens with an image request?
 
-Yes. A query-string `GET` resolves to a 1x1 transparent pixel, so any email client that loads external images fires the hit when it renders the message. This behavior works the same way across clients; it does not depend on a specific mail application.
+Yes, with caveats. A query-string `GET` resolves to a 1x1 transparent pixel, so any email client that loads external images fires the hit when it renders the message. This behavior works the same way across clients; it does not depend on a specific mail application.
 
 The practical way to add the pixel is through an email service provider, which injects tracking pixels into your HTML automatically, or by sending the HTML yourself over SMTP or a sending API. Hand-composing in a mail client is fragile: older Outlook desktop versions required embedding the raw HTML through the **Insert as Text** option, and webmail composers such as Gmail sanitize pasted HTML.
 

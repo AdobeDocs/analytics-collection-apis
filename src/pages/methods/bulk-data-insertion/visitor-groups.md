@@ -7,7 +7,7 @@ description: Use visitor groups to parallelize Bulk Data Insertion API processin
 
 Visitor groups allow customers to upload files that can be processed in parallel, thus increasing the overall ingestion throughput. Each file uploaded must be tagged with a visitor group through an HTTP header. There are important rules that must be followed when categorizing batch files into visitor groups.
 
-A visitor group is a set of visitor IDs that are disjoint from any other visitor group set. This affects which server calls can be batched into which files. Because each file belongs to a single visitor group, two files that belong to different visitor groups must always have separate visitor IDs in them—there can be no overlap between visitor IDs across groups.
+A visitor group is a set of visitor IDs that are disjointed from any other visitor group set. This concept affects which server calls can be batched into which files. Because each file belongs to a single visitor group, two files that belong to different visitor groups must always have separate visitor IDs in them; there can be no overlap between visitor IDs across groups.
 
 For example, if a customer has decided to divide their integer visitor IDs into two visitor groups, group A might contain all odd visitor IDs and group B might contain all even visitor IDs. The method of categorizing them is not important, as long as a visitor ID in group A does not appear in any of the files uploaded with a group B visitor group tag.
 

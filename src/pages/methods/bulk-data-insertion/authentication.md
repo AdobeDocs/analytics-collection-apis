@@ -20,7 +20,7 @@ Before you make calls, create an API project and credential in the Adobe Develop
 
 Each Bulk Data Insertion API call then includes two authentication headers:
 
-* **`Authorization`** — A bearer access token, in the format `Bearer {ACCESS_TOKEN}`. Generate a token with the **Generate access token** button in the Developer Console, or programmatically as described in the [Server-to-Server authentication guide](https://developer.adobe.com/developer-console/docs/guides/authentication/ServerToServerAuthentication/).
-* **`x-api-key`** — The **Client ID** (API key) of your OAuth Server-to-Server credential, found under **Credentials** in the Developer Console.
+* **`Authorization`**: A bearer access token, in the format `Bearer {ACCESS_TOKEN}`. Generate a token with the **Generate access token** button in the Developer Console, or programmatically as described in the [Server-to-Server authentication guide](https://developer.adobe.com/developer-console/docs/guides/authentication/ServerToServerAuthentication/).
+* **`x-api-key`**: The **Client ID** (API key) of your OAuth Server-to-Server credential, found under **Credentials** in the Developer Console.
 
-Access tokens expire. Generate a new token before the current one expires, as described in the [Server-to-Server authentication guide](https://developer.adobe.com/developer-console/docs/guides/authentication/ServerToServerAuthentication/). For the endpoint-specific headers that accompany these credentials — such as `x-adobe-vgid` — see [Bulk Data Insertion API endpoints](endpoints.md).
+Access tokens expire. Generate a new token before the current one expires, as described in the [Server-to-Server authentication guide](https://developer.adobe.com/developer-console/docs/guides/authentication/ServerToServerAuthentication/). For the endpoint-specific headers that accompany these credentials (such as `x-adobe-vgid`), see [Bulk Data Insertion API endpoints](endpoints.md).
