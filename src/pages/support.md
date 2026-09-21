@@ -29,19 +29,19 @@ A place for software engineers and developers to discuss their work.
 
 ### GitHub
 
-[Contributing](https://github.com/AdobeDocs/analytics-mcp/blob/main/.github/CONTRIBUTING.md)
+[Contributing](https://github.com/AdobeDocs/analytics-collection-apis/blob/main/.github/CONTRIBUTING.md)
 
 Learn how you can contribute to the Analytics data collection documentation.
 
 <DiscoverBlock slots="link, text" width="25%"/>
 
-[Issues](https://github.com/AdobeDocs/analytics-mcp/issues)
+[Issues](https://github.com/AdobeDocs/analytics-collection-apis/issues)
 
 Submit an issue to the documentation repository for Adobe to address.
 
 <DiscoverBlock slots="link, text" width="25%"/>
 
-[Pull requests](https://github.com/AdobeDocs/analytics-mcp/pulls)
+[Pull requests](https://github.com/AdobeDocs/analytics-collection-apis/pulls)
 
 View open pull requests for the documentation repository.
 

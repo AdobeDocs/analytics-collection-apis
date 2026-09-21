@@ -1,10 +1,10 @@
 {
-  "name": "analytics-data-collection-apis",
+  "name": "analytics-collection-apis",
   "version": "1.0.0",
   "license": "Apache-2.0",
   "repository": {
     "type": "git",
-    "url": "https://github.com/AdobeDocs/analytics-data-collection-apis"
+    "url": "https://github.com/AdobeDocs/analytics-collection-apis"
   },
   "author": {
     "name": "Tim Kim",
