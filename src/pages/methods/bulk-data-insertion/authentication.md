@@ -24,5 +24,3 @@ Each Bulk Data Insertion API call then includes two authentication headers:
 * **`x-api-key`** — The **Client ID** (API key) of your OAuth Server-to-Server credential, found under **Credentials** in the Developer Console.
 
 Access tokens expire. Generate a new token before the current one expires, as described in the [Server-to-Server authentication guide](https://developer.adobe.com/developer-console/docs/guides/authentication/ServerToServerAuthentication/). For the endpoint-specific headers that accompany these credentials — such as `x-adobe-vgid` — see [Bulk Data Insertion API endpoints](endpoints.md).
-</content>
-</invoke>

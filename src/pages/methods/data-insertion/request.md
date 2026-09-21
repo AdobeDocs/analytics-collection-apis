@@ -23,10 +23,12 @@ https://example.data.adobedc.net/b/ss/examplersid/1/s234234238479
 
 * `https://` designates the protocol. Match the protocol the rest of your site uses (almost always HTTPS).
 * `example.data.adobedc.net` is your data collection server. See [`trackingServerSecure`](https://experienceleague.adobe.com/en/docs/analytics/implementation/vars/config-vars/trackingserversecure) in the Analytics implementation guide to determine the correct value.
-* `/b/ss/` is included in every request. It is part of the endpoint structure for Adobe data collection servers. <!-- Fun fact: `b` is short for beacon, and `ss` is short for SuperStats, the progenitor of Adobe Analytics -->
+* `/b/ss/` is included in every request. It is part of the endpoint structure for Adobe data collection servers.
 * `examplersid` is the report suite ID that receives the data. For multiple report suites, separate the IDs with commas and no spaces (such as `examplersid1,examplersid2`). When using [XML](#xml) encoding, you can set the report suite here in the path or in the `<reportSuiteID>` body element.
 * `/1/` is the [response type](response-types.md). It selects the format of the server's response, such as a 1x1 GIF. Every response type accepts both `GET` and `POST`.
 * `/s234234238479` (`"s"` followed by a random number) prevents the client from caching the request.
+
+[//]: # Fun fact: `b` is short for beacon, and `ss` is short for SuperStats, the progenitor of Adobe Analytics
 
 ## Required components
 
@@ -80,9 +82,9 @@ All values must be URL encoded. See the [variable reference](variable-reference.
 
   Because the payload travels in the body rather than the URL, using `POST` is not bound by URL-length limits, making it the better choice for large payloads. AppMeasurement switches to `POST` automatically whenever the request URL reaches 2048 characters.
 
-  <InlineAlert variant="info" slots="text"/>
+<InlineAlert variant="info" slots="text"/>
 
-  If you send a `POST` from a browser with `XMLHttpRequest` or `fetch`, include credentials ([`withCredentials = true`](https://developer.mozilla.org/en-US/docs/Web/API/XMLHttpRequest/withCredentials) or [`credentials: "include"`](https://developer.mozilla.org/en-US/docs/Web/API/Request/credentials)) so the request carries the visitor's Analytics opt-out cookie. The collection server is a different origin from your page, and browsers omit cookies on cross-origin `XMLHttpRequest`/`fetch` requests unless credentials are enabled. If credentials are not included, an opted-out visitor could still be tracked. A `GET` request from an `<img>` tag sends those cookies automatically, and a server-side `POST` has no visitor cookies to send.
+If you send a `POST` from a browser with `XMLHttpRequest` or `fetch`, include credentials ([`withCredentials = true`](https://developer.mozilla.org/en-US/docs/Web/API/XMLHttpRequest/withCredentials) or [`credentials: "include"`](https://developer.mozilla.org/en-US/docs/Web/API/Request/credentials)) so the request carries the visitor's Analytics opt-out cookie. The collection server is a different origin from your page, and browsers omit cookies on cross-origin `XMLHttpRequest`/`fetch` requests unless credentials are enabled. If credentials are not included, an opted-out visitor could still be tracked. A `GET` request from an `<img>` tag sends those cookies automatically, and a server-side `POST` has no visitor cookies to send.
 
 ## XML
 

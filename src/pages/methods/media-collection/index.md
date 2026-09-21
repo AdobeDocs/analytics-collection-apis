@@ -9,7 +9,7 @@ The Streaming Media Collection API is a server-side, RESTful equivalent of the c
 
 <InlineAlert variant="info" slots="text"/>
 
-For new streaming media implementations, Adobe recommends the [Media Edge API](https://developer.adobe.com/data-collection-apis/docs/api/media-edge/) on the Adobe Experience Platform Edge Network. This documentation covers the Analytics-specific Media Collection API, which remains fully supported for existing and server-side implementations — much as AppMeasurement remains supported alongside the newer Web SDK.
+For new streaming media implementations, Adobe recommends the [Media Edge API](https://developer.adobe.com/data-collection-apis/docs/api/media-edge) on the Adobe Experience Platform Edge Network. This documentation covers the Analytics-specific Media Collection API, which remains fully supported for existing and server-side implementations — much as AppMeasurement remains supported alongside the newer Web SDK.
 
 ## How it relates to the Media SDK
 

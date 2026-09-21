@@ -40,6 +40,6 @@ Analytics collection methods differ by volume, timing, authentication, and paylo
 
 * **Data collection libraries**: Includes AppMeasurement, the Web SDK, and their respective tag extensions. These libraries generate image requests for you using client-side variables. See the [Adobe Analytics implementation guide](https://experienceleague.adobe.com/en/docs/analytics/implementation/home).
 * **Edge Network APIs**: For Edge Network collection, including the Media Edge API, see the [Data Collection APIs](https://developer.adobe.com/data-collection-apis/docs/).
-* **Data Sources**: To import offline or external data on a scheduled basis and tie it to existing Analytics data, see [Data Sources](https://experienceleague.adobe.com/en/docs/analytics/import/data-sources/datasrc-home) in the Analytics Import guide.
+* **Data Sources**: To import offline or external data on a scheduled basis and tie it to existing Analytics data, see [Data Sources](https://experienceleague.adobe.com/en/docs/analytics/import/data-sources/overview) in the Analytics Import guide.
 
 This user guide adheres to Adobe's Code of Conduct. Contributions are encouraged and appreciated. See Adobe's [Code of Conduct](https://github.com/AdobeDocs/analytics-data-collection-apis/blob/main/CODE_OF_CONDUCT.md) and [Contribution Guidelines](https://github.com/AdobeDocs/analytics-data-collection-apis/blob/main/.github/CONTRIBUTING.md) on GitHub for more information.

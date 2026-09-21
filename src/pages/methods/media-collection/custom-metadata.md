@@ -9,7 +9,7 @@ The Streaming Media Collection API lets you send custom key-value pairs alongsid
 
 To make this data available in Analysis Workspace, define custom eVars and configure processing rules to populate them for your use case. Once mapped to eVars or props, the data also becomes available in Adobe Experience Platform through the corresponding eVar paths, provided the [Analytics source connector](https://experienceleague.adobe.com/en/docs/experience-platform/sources/connectors/adobe-applications/analytics) is configured.
 
-For XDM-based implementations that use the Adobe Experience Platform Edge Network, see the [Media Edge API](https://developer.adobe.com/data-collection-apis/docs/api/media-edge/).
+For XDM-based implementations that use the Adobe Experience Platform Edge Network, see the [Media Edge API](https://developer.adobe.com/data-collection-apis/docs/api/media-edge).
 
 ## Overview
 
