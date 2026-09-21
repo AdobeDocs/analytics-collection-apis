@@ -5,7 +5,7 @@ description: Step-by-step guidance for implementing streaming media tracking wit
 
 # Implement the Media Collection API
 
-This guide walks through implementing media tracking with the Streaming Media Collection API — from a quick start and obtaining a session ID through sending events, pings, and quality-of-experience data, plus timeout, ordering, and queuing considerations. To attach custom key-value pairs to your events, see [Custom metadata](custom-metadata.md).
+This guide walks through implementing media tracking with the Streaming Media Collection API: from a quick start and obtaining a session ID through sending events, pings, and quality-of-experience data, plus timeout, ordering, and queuing considerations. To attach custom key-value pairs to your events, see [Custom metadata](custom-metadata.md).
 
 ## Quick start
 
@@ -77,7 +77,7 @@ httpRequest.setRequestHeader('Content-Type', 'application/json');
 
 ## Obtaining a session ID
 
-When you send a [sessions request](sessions.md), the session ID is returned in the `Location` response header as the relative path `/api/v1/sessions/{sid}`. Parse the segment after `sessions/` and store it — you pass it in the URL of every events request. Only a `201` response indicates the session was created.
+When you send a [sessions request](sessions.md), the session ID is returned in the `Location` response header as the relative path `/api/v1/sessions/{sid}`. Parse the segment after `sessions/` and store it; you pass it in the URL of every events request. Only a `201` response indicates the session was created.
 
 ```js
 // After a successful POST to /api/v1/sessions:
@@ -111,7 +111,7 @@ clearInterval(pingTimer);
 
 ## Sending quality-of-experience data
 
-Any event can carry an optional `qoeData` object alongside `params`. It reports playback quality — bitrate, dropped frames, frame rate, startup time, and error details. See the [quality data parameters](parameters.md#quality-data).
+Any event can carry an optional `qoeData` object alongside `params`. It reports playback quality: bitrate, dropped frames, frame rate, startup time, and error details. See the [quality data parameters](parameters.md#quality-data).
 
 ```json
 {

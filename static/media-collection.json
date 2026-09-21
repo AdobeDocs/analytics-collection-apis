@@ -94,7 +94,7 @@
           "Events"
         ],
         "summary": "Send an event",
-        "description": "Sends a playback event — such as `play`, `ping`, `pauseStart`, `bufferStart`, `bitrateChange`, `chapterStart`, or an ad event — to an active session. The request body has the same structure as a sessions request. A successful call returns `204 No Content`; the endpoint does not return a body.",
+        "description": "Sends a playback event (such as `play`, `ping`, `pauseStart`, `bufferStart`, `bitrateChange`, `chapterStart`, or an ad event) to an active session. The request body has the same structure as a sessions request. A successful call returns `204 No Content`; the endpoint does not return a body.",
         "operationId": "sendEvent",
         "parameters": [
           {

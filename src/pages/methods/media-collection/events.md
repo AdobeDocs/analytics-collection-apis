@@ -5,7 +5,7 @@ description: Send playback events to an active session using the Adobe Analytics
 
 # Events endpoint
 
-The events endpoint sends playback events to an active session in the Streaming Media Collection API — such as pings, pauses, chapters, and ad events. This page documents the request URI, request body, event types, response, and response codes.
+The events endpoint sends playback events to an active session in the Streaming Media Collection API (such as pings, pauses, chapters, and ad events). This page documents the request URI, request body, event types, response, and response codes.
 
 ## Request
 

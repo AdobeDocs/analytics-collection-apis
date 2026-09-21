@@ -13,31 +13,31 @@ keywords:
 
 The response type is the numeric segment of the [endpoint path](request.md#request-structure) (the `/1/` in `/b/ss/examplersid/1/s234234238479`). It selects the **format** of the server's response: a GIF, `204 No Content`, JavaScript, JSON, XML, and so on. The response format is independent of how you send the request, with one exception: an XML request body is parsed only at the `/6/` response type (see [XML](request.md#xml)).
 
-Every response type technically accepts both `GET` and `POST`; however, several response types would not make sense. For example, using `/6/` reponse type as `GET` would not reThe type you choose does not change whether a valid hit is recorded; it changes only the response you receive and, for some types, how a validation failure is surfaced.
+Every response type technically accepts both `GET` and `POST`; however, several response types would not make sense in practice. The type you choose does not change whether a valid hit is recorded; it changes only the response you receive and, for some types, how a validation failure is surfaced.
 
 ## Response types
 
 <AccordionItem slots="heading, text"/>
 
-### /0/ — HTML
+### /0/: HTML
 
-Returns a single space with a `text/html` content type, and `200 OK`. On a failed hit it sets a `Status: FAILURE` header (with a `Reason` header when a reason is available), and it flags failure even when no hit is recorded — so it surfaces a dropped `GET`.
+Returns a single space with a `text/html` content type, and `200 OK`. On a failed hit it sets a `Status: FAILURE` header (with a `Reason` header when a reason is available), and it flags failure even when no hit is recorded, so it surfaces a dropped `GET`.
 
 <AccordionItem slots="heading, text"/>
 
-### /1/ — GIF (default)
+### /1/: GIF (default)
 
 Returns a 1x1 transparent GIF (`image/gif`), and `200 OK`. Use this response type for `<img>` tag requests. AppMeasurement primarily uses this response type for both `GET` and `POST` requests. On `POST` validation failures it sets `Status` and `Reason` headers; `GET` validation surfaces Nothing, even when the hit is dropped.
 
 <AccordionItem slots="heading, text"/>
 
-### /2/ — No content
+### /2/: No content
 
-Returns `204 No Content` with no body. It sets a `Status` header (`SUCCESS` or `FAILURE`) on any method, plus a `Reason` header when a reason is available — the most reliable lightweight signal.
+Returns `204 No Content` with no body. It sets a `Status` header (`SUCCESS` or `FAILURE`) on any method, plus a `Reason` header when a reason is available (the most reliable lightweight signal).
 
 <AccordionItem slots="heading, text, code"/>
 
-### /3/ — JavaScript
+### /3/: JavaScript
 
 Returns a JavaScript response that assigns the visitor ID to a `s_vid` variable, so a browser can read the ID back after the beacon fires. This ID is the visitor's `s_vi` cookie value (the `aid` [variable](variable-reference.md)). On a `POST` validation failure it sets `Status` and `Reason` headers.
 
@@ -47,19 +47,19 @@ var s_vid='355231C82E332200-4000195842CEFA67'
 
 <AccordionItem slots="heading, text"/>
 
-### /4/ — Partner redirect
+### /4/: Partner redirect
 
 Used by select partner libraries, and only on a `GET`. Do not set it manually.
 
 <AccordionItem slots="heading, text"/>
 
-### /5/ — WBMP
+### /5/: WBMP
 
 An `image/wbmp` image, equivalent to `/1/` (GIF) for legacy `wbmp`-only clients. It does not surface a status or reason.
 
 <AccordionItem slots="heading, text, code"/>
 
-### /6/ — XML
+### /6/: XML
 
 Returns an XML body with the hit status. This response type exclusively parses an XML request body (see [XML](request.md#xml)); it also mirrors the status and reason into `Status`/`Reason` headers, except for a `NO account` failure, which appears only in the body.
 
@@ -70,7 +70,7 @@ Returns an XML body with the hit status. This response type exclusively parses a
 
 <AccordionItem slots="heading, text, code, text"/>
 
-### /10/ — Visitor JSON
+### /10/: Visitor JSON
 
 Returns the hit status and visitor ID as JSON. When an Experience Cloud ID (`mid`) is available for the visitor, the response includes additional visitor information as well. AppMeasurement uses this response type when Audience Manager is included in your implementation.
 
@@ -82,7 +82,7 @@ The `id` is the visitor's `s_vi` cookie value (the `aid` [variable](variable-ref
 
 <AccordionItem slots="heading, text, code, text"/>
 
-### /11/ — Visitor XML
+### /11/: Visitor XML
 
 The same visitor information as `/10/`, returned as XML.
 

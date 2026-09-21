@@ -1,6 +1,6 @@
 ---
 title: Formulate a Data Insertion API request
-description: How to construct a Data Insertion API request, including — the endpoint structure, required components, and encodings.
+description: How to construct a Data Insertion API request, including the endpoint structure, required components, and encodings.
 keywords:
   - Data Insertion API
   - Image request

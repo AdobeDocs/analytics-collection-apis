@@ -9,7 +9,7 @@ The Streaming Media Collection API is a server-side, RESTful equivalent of the c
 
 <InlineAlert variant="info" slots="text"/>
 
-For new streaming media implementations, Adobe recommends the [Media Edge API](https://developer.adobe.com/data-collection-apis/docs/api/media-edge) on the Adobe Experience Platform Edge Network. This documentation covers the Analytics-specific Media Collection API, which remains fully supported for existing and server-side implementations — much as AppMeasurement remains supported alongside the newer Web SDK.
+For new streaming media implementations, Adobe recommends the [Media Edge API](https://developer.adobe.com/data-collection-apis/docs/api/media-edge) on the Adobe Experience Platform Edge Network. This documentation covers the Analytics-specific Media Collection API, which remains fully supported for existing and server-side implementations (much as AppMeasurement remains supported alongside the newer Web SDK).
 
 ## How it relates to the Media SDK
 
@@ -23,11 +23,11 @@ The Media Collection API is one of several Adobe Analytics data collection metho
 
 ## Authentication
 
-The Media Collection API does not use an authorization token. Data is routed and attributed by the Analytics parameters you send in each session — the report suite (`analytics.reportSuite`), tracking server (`analytics.trackingServer`), and Experience Cloud organization ID (`visitor.marketingCloudOrgId`). For how this compares to the other collection methods, see the [collection method comparison](../../index.md#compare-each-method).
+The Media Collection API does not use an authorization token. Data is routed and attributed by the Analytics parameters you send in each session: the report suite (`analytics.reportSuite`), tracking server (`analytics.trackingServer`), and Experience Cloud organization ID (`visitor.marketingCloudOrgId`). For how this compares to the other collection methods, see the [collection method comparison](../../index.md#compare-each-method).
 
 ## Media tracking data flows
 
-A media player implementing the Media Collection API makes tracking calls to the media collection endpoint over HTTP. The endpoint is a provisioned host of the form `https://{uri}` — obtain your `{uri}` from your Adobe representative. Every call is an HTTP `POST` with a JSON request body, and every call sets the `Content-Type: application/json` request header.
+A media player implementing the Media Collection API makes tracking calls to the media collection endpoint over HTTP. The endpoint is a provisioned host of the form `https://{uri}`; obtain your `{uri}` from your Adobe representative. Every call is an HTTP `POST` with a JSON request body, and every call sets the `Content-Type: application/json` request header.
 
 ![Media tracking data flow from a player through the Media Collection API to Adobe Analytics reporting.](media-collection-overview.png)
 

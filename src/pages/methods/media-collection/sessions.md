@@ -65,12 +65,12 @@ Access-Control-Expose-Headers: Location
 Field notes:
 
 * `playerTime` (required)
-    * `playhead` — The playhead position, in seconds. For live content, use the current second of the day, where `0 <= playhead < 86400`. For recorded content, use the current second of content, where `0 <= playhead < content length`. The value can be a floating-point number.
-    * `ts` — The timestamp, in milliseconds, in Coordinated Universal Time (UTC).
-* `eventType` (required) — For a sessions request this is always `sessionStart`.
-* `params` (required) — See [Request parameters](parameters.md).
-* `customMetadata` (optional) — Custom key-value pairs. See [Custom metadata](custom-metadata.md).
-* `qoeData` (optional) — Quality-of-experience data.
+    * `playhead`: The playhead position, in seconds. For live content, use the current second of the day, where `0 <= playhead < 86400`. For recorded content, use the current second of content, where `0 <= playhead < content length`. The value can be a floating-point number.
+    * `ts`: The timestamp, in milliseconds, in Coordinated Universal Time (UTC).
+* `eventType` (required): For a sessions request this is always `sessionStart`.
+* `params` (required): See [Request parameters](parameters.md).
+* `customMetadata` (optional): Custom key-value pairs. See [Custom metadata](custom-metadata.md).
+* `qoeData` (optional): Quality-of-experience data.
 
 ## Obtaining the session ID
 

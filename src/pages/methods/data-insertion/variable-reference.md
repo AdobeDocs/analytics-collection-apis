@@ -39,7 +39,7 @@ For the components every hit must include, see [Required components](request.md#
 | ECID | `mid` | `<marketingCloudVisitorId>` | The unique identifier used with the [Adobe Visitor ID Service](https://experienceleague.adobe.com/en/docs/id-service/using/home). Used in the [Experience Cloud Visitor ID](https://experienceleague.adobe.com/en/docs/analytics/components/dimensions/experience-cloud-visitor-id) dimension. See [Visitor identification using the Data Insertion API](https://experienceleague.adobe.com/en/docs/analytics/implementation/id/data-insertion). |
 | Events | `events` | `<events>` | A comma-separated list of all numeric events for the hit. Most [Metrics](https://experienceleague.adobe.com/en/docs/analytics/components/metrics/overview) derive their data from this variable. The shorthand query parameter `ev` is also valid. |
 | Fallback visitor ID | `fid` | `<fallbackVisitorId>` | The `s_fid` fallback [cookie](https://experienceleague.adobe.com/en/docs/core-services/interface/data-collection/cookies/analytics). |
-| Generated timestamp | `t` | — | The auto-generated date/time of the hit, in the format `dd/mm/yyyy hh:mm:ss w o`:\<br/\>• `dd/mm/yyyy hh:mm:ss` — date/time in JavaScript (month `0` is January, `11` is December)\<br/\>• `w` — day of the week (`0` Sunday, `6` Saturday)\<br/\>• `o` — negative GMT offset in minutes (for example, `420` is GMT-7)\<br/\>For a custom timestamp, use the Timestamp variable instead. |
+| Generated timestamp | `t` | — | The auto-generated date/time of the hit, in the format `dd/mm/yyyy hh:mm:ss w o`:\<br/\>• `dd/mm/yyyy hh:mm:ss`: date/time in JavaScript (month `0` is January, `11` is December)\<br/\>• `w`: day of the week (`0` Sunday, `6` Saturday)\<br/\>• `o`: negative GMT offset in minutes (for example, `420` is GMT-7)\<br/\>For a custom timestamp, use the Timestamp variable instead. |
 | IMS organization | `mcorgid` | `<marketingCloudOrgId>` | The Adobe IMS Org, which identifies the organization to the Visitor ID Service. |
 | IP address | (HTTP header) | `<ipAddress>` | The visitor's IP address. When using query strings, the IP address comes from the request connection or the `X-Forwarded-For` header rather than a parameter. |
 | Java enabled | `v` | `<javaEnabled>` | The [Java enabled](https://experienceleague.adobe.com/en/docs/analytics/components/dimensions/java-enabled) dimension. |
@@ -82,7 +82,7 @@ For the components every hit must include, see [Required components](request.md#
 | --- | --- | --- |
 | `h.architecture` | `<architecture>` | String |
 | `h.bitness` | `<bitness>` | String |
-| `h.brands` | `<brands>` | Can contain one or more `<brand>` records — for example, `<brand><name>Chromium</name><version>100</version></brand>`. |
+| `h.brands` | `<brands>` | Can contain one or more `<brand>` records (for example, `<brand><name>Chromium</name><version>100</version></brand>`). |
 | `h.mobile` | `<mobile>` | Boolean |
 | `h.model` | `<model>` | String |
 | `h.platform` | `<platform>` | String |
