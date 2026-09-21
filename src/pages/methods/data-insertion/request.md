@@ -28,7 +28,7 @@ https://example.data.adobedc.net/b/ss/examplersid/1/s234234238479
 * `/1/` is the [response type](response-types.md). It selects the format of the server's response, such as a 1x1 GIF. Every response type accepts both `GET` and `POST`.
 * `/s234234238479` (`"s"` followed by a random number) prevents the client from caching the request.
 
-<? Fun fact: `b` is short for beacon, and `ss` is short for SuperStats, the progenitor of Adobe Analytics ?>
+[//]: # (Fun fact: `b` is short for beacon, and `ss` is short for SuperStats, the progenitor of Adobe Analytics ?)
 
 ## Required components
 
@@ -46,7 +46,7 @@ Every hit must include:
   * Link type (`pe` / `<linkType>`) with a link URL (`pev1` / `<linkUrl>`) or link name (`pev2` / `<linkName>`)
 * **The report suite ID**: the endpoint path segment when using query strings; when using XML, the path segment or the `<reportSuiteID>` element (either works)
 
-Hits that do not meet these requirements are omitted from reporting. When you send a `POST`, a hit missing one of these components fails validation with a reason you can read in the response — see [Validation and failures](response-types.md#validation-and-failures).
+Hits that do not meet these requirements are omitted from reporting. When you send `POST` requests, a hit missing one of these components fails validation with a reason you can read in the response. See [Validation and failures](response-types.md#validation-and-failures) for more information.
 
 ## Query string
 
@@ -70,7 +70,7 @@ All values must be URL encoded. See the [variable reference](variable-reference.
   <img src="https://example.data.adobedc.net/b/ss/examplersid/1/s234234238479?AQB=1&g=http%3A%2F%2Fexample.com&pageName=Example%20direct%20hit&v1=Example%20value&AQE=1"/>
   ```
 
-  Using `GET` is the simplest form to construct, but it is subject to URL-length limits. Its data can also be recorded in browser, proxy, and server logs. A `GET` cannot return a validation failure reason — see [Validation and failures](response-types.md#validation-and-failures).
+  Using `GET` is the simplest form to construct, but it is subject to URL-length limits. Its data can also be recorded in browser, proxy, and server logs. `GET` requests cannot return a validation failure reason. See [Validation and failures](response-types.md#validation-and-failures) for more information.
 
 * **`POST`**: Send the endpoint as the request URL and the payload as the request body, using the `application/x-www-form-urlencoded` content type:
 
@@ -88,7 +88,7 @@ If you send a `POST` from a browser with `XMLHttpRequest` or `fetch`, include cr
 
 ## XML
 
-When using XML encoding, the data is an XML document sent as the body of an HTTP `POST` with the `application/xml` content type. XML request bodies are parsed only at the `/6/` [response type](response-types.md) — sending an XML body to any other response type causes it to be parsed as a query string, which fails. Set the report suite in the `<reportSuiteID>` element or in the [endpoint](#request-structure) path.
+When using XML encoding, the data is an XML document sent as the body of an HTTP `POST` with the `application/xml` content type. XML request bodies are parsed only at the `/6/` [response type](response-types.md); sending an XML body to any other response type causes it to be parsed as a query string, which fails. Set the report suite in the `<reportSuiteID>` element or in the [endpoint](#request-structure) path.
 
 See the [variable reference](variable-reference.md) for every supported XML tag. Note the following XML formatting rules:
 

@@ -65,7 +65,7 @@ Access-Control-Allow-Headers: Content-Type
 Access-Control-Expose-Headers: Location
 ```
 
-On success, the `201 Created` response includes the session ID in the `Location` header. The session ID is required for all subsequent tracking calls — see [Obtaining a session ID](#obtaining-a-session-id).
+On success, the `201 Created` response includes the session ID in the `Location` header. The session ID is required for all subsequent tracking calls. See [Obtaining a session ID](#obtaining-a-session-id) for more information.
 
 ## Setting the HTTP request type
 
@@ -132,7 +132,7 @@ Any event can carry an optional `qoeData` object alongside `params`. It reports 
 The Media Collection API is stateless and, unlike the Media SDK, does not automatically issue a new session ID when a session times out. When a timeout occurs, the back end closes the session and drops all subsequent calls made with that session ID. Your client must monitor the timeout conditions and obtain a new session ID when one occurs. The back end closes a session under either of these conditions:
 
 * **No API events for 10 minutes.** If the back end receives no API events, it closes the session.
-* **No playhead change for 30 minutes.** If the playhead does not move for 30 minutes — for example, the user pauses and walks away — the back end closes the session.
+* **No playhead change for 30 minutes.** If the playhead does not move for 30 minutes (for example, the user pauses and walks away), the back end closes the session.
 
 In addition, the client Media SDKs restart long-running sessions every 24 hours. Start a new session if a session approaches this limit.
 
@@ -142,7 +142,7 @@ You can also force a session to end by sending an events request with the `sessi
 
 ## Controlling the order of events
 
-Streaming tracking is highly time-dependent, and calls occasionally arrive at the back end out of order. The back end buffers events in a window — five seconds or a maximum of 10 events — then reorders them by `playerTime.ts` before sending them to the processing pipeline. Reordering may fail if the delay between out-of-order calls exceeds one second.
+Streaming tracking is highly time-dependent, and calls occasionally arrive at the back end out of order. The back end buffers events in a window (five seconds or a maximum of 10 events) then reorders them by `playerTime.ts` before sending them to the processing pipeline. Reordering can fail if the delay between out-of-order calls exceeds one second.
 
 For example, an `adBreakStart` immediately followed by an `adStart` can arrive out of order, because the two calls fire almost simultaneously. Always keep at least a 1-millisecond difference between the timestamps of consecutive events, so the back end can restore the correct order; two events must never share a timestamp.
 

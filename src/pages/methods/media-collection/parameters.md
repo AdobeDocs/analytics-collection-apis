@@ -5,7 +5,7 @@ description: Reference for the parameters accepted by Adobe Analytics Media Coll
 
 # Media Collection API request parameters
 
-This reference lists the parameters accepted by Streaming Media Collection API requests, grouped by category — Analytics, visitor, content, standard metadata, ad, chapter, quality-of-experience, and player-state data — and explains how request bodies are validated. Parameters are sent inside the `params` object of a request body (quality-of-experience parameters are sent in `qoeData`).
+This reference lists the parameters accepted by Streaming Media Collection API requests, grouped by category, and explains how request bodies are validated. Parameters are sent inside the `params` object of a request body (quality-of-experience parameters are sent in `qoeData`).
 
 In the tables below, **Required** indicates whether the parameter is mandatory for the event it is set on, **Type** is the JSON data type, and **Set on** is the event type the parameter is sent with.
 

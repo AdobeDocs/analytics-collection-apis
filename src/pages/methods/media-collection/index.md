@@ -35,11 +35,11 @@ A media player implementing the Media Collection API makes tracking calls to the
 
 The Media Collection API has two endpoints.
 
-* **Sessions** — Establishes a session with the server and returns a session ID used in subsequent events calls. Your app calls this once at the start of a tracking session. See [Sessions endpoint](sessions.md).
+* **Sessions**: Establishes a session with the server and returns a session ID used in subsequent events calls. Your app calls this once at the start of a tracking session. See [Sessions endpoint](sessions.md).
 
   `POST https://{uri}/api/v1/sessions`
 
-* **Events** — Sends media tracking data to an open session. See [Events endpoint](events.md).
+* **Events**: Sends media tracking data to an open session. See [Events endpoint](events.md).
 
   `POST https://{uri}/api/v1/sessions/{sid}/events`
 
@@ -68,11 +68,11 @@ Both endpoints accept a JSON body with the same structure:
 }
 ```
 
-* `playerTime` — Required on all requests. The playhead position (in seconds) and timestamp (in milliseconds since the Unix epoch).
-* `eventType` — Required on all requests. The kind of media event being reported.
-* `params` — Required for certain event types. The Analytics, visitor, and media parameters. See [Request parameters](parameters.md), and check the [validation schema](parameters.md#request-validation) to determine which parameters are required for each event type.
-* `qoeData` — Optional on all requests. Quality-of-experience data.
-* `customMetadata` — Optional. Sent only with the `sessionStart`, `adStart`, and `chapterStart` event types. See [Custom metadata](custom-metadata.md).
+* `playerTime`: Required on all requests. The playhead position (in seconds) and timestamp (in milliseconds since the Unix epoch).
+* `eventType`: Required on all requests. The kind of media event being reported.
+* `params`: Required for certain event types. The Analytics, visitor, and media parameters. See [Request parameters](parameters.md), and check the [validation schema](parameters.md#request-validation) to determine which parameters are required for each event type.
+* `qoeData`: Optional on all requests. Quality-of-experience data.
+* `customMetadata`: Optional. Sent only with the `sessionStart`, `adStart`, and `chapterStart` event types. See [Custom metadata](custom-metadata.md).
 
 ### Event types
 
@@ -84,8 +84,8 @@ For details on when to send each event, see [Events endpoint](events.md).
 
 ## Next steps
 
-* [Sessions endpoint](sessions.md) — Start a tracking session and obtain a session ID.
-* [Events endpoint](events.md) — Send playback events to an open session.
-* [Request parameters](parameters.md) — The full parameter reference and request validation.
-* [Custom metadata](custom-metadata.md) — Attach custom key-value pairs to media events.
-* [Implementation guide](implementation.md) — An end-to-end walkthrough, from quick start through pings, timeouts, ordering, and queuing.
+* [Sessions endpoint](sessions.md): Start a tracking session and obtain a session ID.
+* [Events endpoint](events.md): Send playback events to an open session.
+* [Request parameters](parameters.md): The full parameter reference and request validation.
+* [Custom metadata](custom-metadata.md): Attach custom key-value pairs to media events.
+* [Implementation guide](implementation.md): An end-to-end walkthrough, from quick start through pings, timeouts, ordering, and queuing.

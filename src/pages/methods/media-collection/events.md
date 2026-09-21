@@ -15,7 +15,7 @@ Send an HTTP `POST` with a JSON request body and the `Content-Type: application/
 
 ### URI parameter
 
-`sid` — The session ID returned in the `Location` header of a [sessions request](sessions.md).
+`sid`: The session ID returned in the `Location` header of a [sessions request](sessions.md).
 
 ### Request body
 
@@ -35,12 +35,12 @@ The request body must be JSON and has the same structure as a sessions request. 
 Field notes:
 
 * `playerTime` (required)
-    * `playhead` — The playhead position, in seconds. The value can be a floating-point number.
-    * `ts` — The timestamp, in milliseconds.
-* `eventType` (required) — See [Event types](#event-types).
-* `params` (optional; required for some event types) — See [Request parameters](parameters.md).
-* `customMetadata` (optional) — Sent only with the `sessionStart`, `adStart`, and `chapterStart` event types. See [Custom metadata](custom-metadata.md).
-* `qoeData` (optional) — Quality-of-experience data.
+    * `playhead`: The playhead position, in seconds. The value can be a floating-point number.
+    * `ts`: The timestamp, in milliseconds.
+* `eventType` (required): See [Event types](#event-types).
+* `params` (optional; required for some event types): See [Request parameters](parameters.md).
+* `customMetadata` (optional): Sent only with the `sessionStart`, `adStart`, and `chapterStart` event types. See [Custom metadata](custom-metadata.md).
+* `qoeData` (optional): Quality-of-experience data.
 
 ## Event types
 
@@ -65,10 +65,10 @@ The `eventType` member identifies the media event. The following values are sent
 | `chapterStart` | A chapter or segment started. |
 | `chapterComplete` | A chapter finished. |
 | `chapterSkip` | A chapter was skipped. |
-| `stateStart` | A custom player state — such as full screen or mute — started. |
+| `stateStart` | A custom player state started, such as full screen or mute. |
 | `stateEnd` | A custom player state ended. |
 
-Note the wire spelling: use `pauseStart` (not `pause`), and `ping` for the heartbeat. Resuming after a pause, buffer, or seek is reported with a `play` event — there are no separate `pause`, `bufferComplete`, `seekStart`, or `seekComplete` event types on the wire.
+Note the wire spelling: use `pauseStart` (not `pause`), and `ping` for the heartbeat. Resuming after a pause, buffer, or seek is reported with a `play` event; there are no separate `pause`, `bufferComplete`, `seekStart`, or `seekComplete` event types on the wire.
 
 <InlineAlert variant="warning" slots="text"/>
 
