@@ -23,8 +23,8 @@ In the tables below, **Required** indicates whether the parameter is mandatory f
 
 | Request key | Required | Type | Set on | Description |
 | --- | :---: | :---: | :---: | --- |
-| `visitor.marketingCloudOrgId` | Y | string | `sessionStart` | The Experience Cloud organization ID; identifies your organization within Adobe Experience Cloud. |
-| `visitor.marketingCloudUserId` | N | string | `sessionStart` | The Experience Cloud ID (ECID). In most scenarios this is the ID you should use to identify a user. Equivalent to the `MID` in Adobe Analytics. While not technically required, this parameter is necessary for accessing Experience Cloud apps and services. |
+| `visitor.marketingCloudOrgId` | Y | string | `sessionStart` | The IMS organization ID; identifies your organization within Adobe CX Enterprise. |
+| `visitor.marketingCloudUserId` | N | string | `sessionStart` | The ECID. In most scenarios this is the ID you should use to identify a user. Equivalent to the `MID` in Adobe Analytics. While not technically required, this parameter is necessary for accessing CX Enterprise apps and services. |
 | `visitor.aamLocationHint` | N | integer | `sessionStart` | Provides the Adobe Audience Manager Edge region. If no value is entered, the value is null. See [visitor.aamLocationHint](#visitoraamlocationhint). |
 | `visitor.customerIDs` | N | object | `sessionStart` | Declared customer IDs. See [Legacy and declared user IDs](#legacy-and-declared-user-ids). |
 | `appInstallationId` | N | string | `sessionStart` | Uniquely identifies the app and the device. See [appInstallationId](#appinstallationid). |
@@ -123,18 +123,18 @@ Quality-of-experience parameters are sent in the `qoeData` object rather than `p
 
 | Request key | Required | Type | Set on | Description |
 | --- | :---: | :---: | :---: | --- |
-| `analytics.optOutServerSideForwarding` | N | boolean | `sessionStart` | Set to `true` when the end user has opted out of their data being shared between Adobe Analytics and other Experience Cloud solutions, such as Audience Manager. |
+| `analytics.optOutServerSideForwarding` | N | boolean | `sessionStart` | Set to `true` when the end user has opted out of their data being shared between Adobe Analytics and other CX Enterprise solutions, such as Audience Manager. |
 | `analytics.optOutShare` | N | boolean | `sessionStart` | Set to `true` when the end user has opted out of their data being federated, for example to other Adobe Analytics clients. |
 
 ## Additional details
 
 ### visitor.marketingCloudUserId
 
-Pass the Experience Cloud ID (also known as the `MID` or `MCID`) on the `sessionStart` call by including it in the `params` map using the key `visitor.marketingCloudUserId`. This is useful if you already integrate with other Experience Cloud products and have already obtained the ECID.
+Pass the ECID (`mid`) on the `sessionStart` call by including it in the `params` map using the key `visitor.marketingCloudUserId`. This is useful if you already integrate with other CX Enterprise products and have already obtained the ECID.
 
 <InlineAlert variant="note" slots="text"/>
 
-The Media Collection API integrates with the Experience Cloud family of apps (Adobe Analytics, Audience Manager, Target, and so on). You need an Experience Cloud ID to access these apps. The ECID is what you should use to identify users in most scenarios.
+The Media Collection API integrates with the CX Enterprise family of apps (Adobe Analytics, Audience Manager, Target, and so on). You need an ECID to access these apps. The ECID is what you should use to identify users in most scenarios.
 
 ### appInstallationId
 

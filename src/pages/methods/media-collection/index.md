@@ -23,7 +23,7 @@ The Media Collection API is one of several Adobe Analytics data collection metho
 
 ## Authentication
 
-The Media Collection API does not use an authorization token. Data is routed and attributed by the Analytics parameters you send in each session: the report suite (`analytics.reportSuite`), tracking server (`analytics.trackingServer`), and Experience Cloud organization ID (`visitor.marketingCloudOrgId`). For how this compares to the other collection methods, see the [collection method comparison](../../index.md#compare-each-method).
+The Media Collection API does not use an authorization token. Data is routed and attributed by the Analytics parameters you send in each session: the report suite (`analytics.reportSuite`), tracking server (`analytics.trackingServer`), and IMS organization ID (`visitor.marketingCloudOrgId`). For how this compares to the other collection methods, see the [collection method comparison](../../index.md#compare-each-method).
 
 ## Media tracking data flows
 

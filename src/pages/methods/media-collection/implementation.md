@@ -15,7 +15,7 @@ Before you build a full implementation, verify your request data by sending requ
 
 To start tracking:
 
-1. Gather the required Adobe Analytics and visitor data: the Experience Cloud organization ID, the Experience Cloud ID (ECID), the Analytics report suite ID, and the Analytics tracking server URL.
+1. Gather the required Adobe Analytics and visitor data: the IMS organization ID, the ECID, the Analytics report suite ID (RSID), and the Analytics tracking server URL.
 2. Build a JSON body for your sessions request with the minimum data required for a successful call.
 3. Send the sessions request to your endpoint. If the payload is invalid, correct it and retry until you receive a `201 Created` response.
 

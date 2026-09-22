@@ -17,7 +17,7 @@ For the components every hit must include, see [Required components](request.md#
 | --- | --- | --- | --- |
 | Activity Map object ID | `oid` | — | Object identifier for the last page ([`s_objectID`](https://experienceleague.adobe.com/en/docs/analytics/implementation/vars/page-vars/s-objectid)) in Activity Map. |
 | Analytics for Target | `tnta` | `<a4t>` | Target data payload for Analytics for Target integrations. |
-| Analytics visitor ID | `aid` | `<analyticsVisitorId>` | The Analytics visitor ID, stored in the `s_vi` cookie. Superseded by the Experience Cloud ID (`mid`) in modern implementations. |
+| Analytics visitor ID | `aid` | `<analyticsVisitorId>` | The Analytics visitor ID, stored in the `s_vi` cookie. Superseded by the ECID (`mid`) in modern implementations. |
 | AppMeasurement flag | `ndh` | — | Added by AppMeasurement to every request to indicate that the hit originated from an AppMeasurement library. Do not alter. |
 | Audience Manager blob | `aamb` | `<aamBlob>` | Encoded Audience Manager profile data passed during ID syncing through the Visitor ID Service. |
 | Audience Manager location hint | `aamlh` | `<imsRegion>` | Integer representing the Audience Manager location hint, so data forwards to the correct Audience Manager regional data collection center. Retrieve it with the [getLocationHint](https://experienceleague.adobe.com/en/docs/id-service/using/id-service-api/methods/getlocationhint) function of the Visitor ID Service. Requires an ECID. |

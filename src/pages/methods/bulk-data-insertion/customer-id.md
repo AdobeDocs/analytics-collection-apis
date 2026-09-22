@@ -1,11 +1,11 @@
 ---
 title: Use a customer ID to identify visitors
-description: Use a customer ID as a seed to generate Experience Cloud IDs when uploading data with the Bulk Data Insertion API.
+description: Use a customer ID as a seed to generate ECIDs when uploading data with the Bulk Data Insertion API.
 ---
 
 # Use a customer ID to identify visitors
 
-Adobe offers a way to simplify the process of generating an identifier used by the Adobe Visitor ID Service. Adobe can use one of the customer IDs in the [`setCustomerIDs`](https://experienceleague.adobe.com/en/docs/id-service/using/id-service-api/methods/setcustomerids) method as a seed for generating an Adobe Experience Cloud visitor ID for you.
+Adobe offers a way to simplify the process of generating an identifier used by the Adobe Visitor ID Service. Adobe can use one of the customer IDs in the [`setCustomerIDs`](https://experienceleague.adobe.com/en/docs/id-service/using/id-service-api/methods/setcustomerids) method as a seed for generating an ECID for you.
 
 ## Prerequisites
 

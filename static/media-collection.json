@@ -263,11 +263,11 @@
         "visitor.marketingCloudOrgId": {
           "type": "string",
           "example": "0123456789ABCDEF0123456789@AdobeOrg",
-          "description": "The Experience Cloud organization ID."
+          "description": "The IMS organization ID."
         },
         "visitor.marketingCloudUserId": {
           "type": "string",
-          "description": "The Experience Cloud ID (ECID) of the visitor."
+          "description": "The ECID of the visitor."
         },
         "visitor.aamLocationHint": {
           "type": "integer",

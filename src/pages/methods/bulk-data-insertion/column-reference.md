@@ -40,7 +40,7 @@ Column header name | `queryString` equivalent | Description
 `linkType` | `pe` | The type of link. Defaults to `o` if this field is empty and `linkName` contains a value. Valid values when using the `linkType` column:\<br/\>• `d`: Download link\<br/\>• `e`: Exit link\<br/\>• `o`: Custom link\<br/\>When using the `pe` query string, use:\<br/\>• `lnk_d`: Download link\<br/\>• `lnk_e`: Exit link\<br/\>• `lnk_o`: Custom link
 `linkURL` | `pev1` | The link URL.
 `list1` - `list3` | `l1` - `l3` | [List variables](https://experienceleague.adobe.com/en/docs/analytics/implementation/vars/page-vars/list).
-`marketingCloudVisitorID` | `mid` | The unique identifier used with the [Adobe Experience Cloud Identity Service](https://experienceleague.adobe.com/en/docs/id-service/using/home).
+`marketingCloudVisitorID` | `mid` | The unique identifier used with the [Adobe Visitor Identity Service](https://experienceleague.adobe.com/en/docs/id-service/using/home).
 `pageName` | `pageName` | The [Page](https://experienceleague.adobe.com/en/docs/analytics/components/dimensions/page) dimension.
 `pageType` | `pageType` | The [`pageType`](https://experienceleague.adobe.com/en/docs/analytics/implementation/vars/page-vars/pagetype) implementation variable. Set to the string value `"errorPage"` on any error pages, such as a 404 or 503 error.
 `pageURL` | `g` | The [Page URL](https://experienceleague.adobe.com/en/docs/analytics/components/dimensions/page-url) dimension.

@@ -56,7 +56,7 @@ When using query-string encoding (sometimes known as an **image request**), the 
 AQB=1&g=http%3A%2F%2Fexample.com&pageName=Example%20direct%20hit&v1=Example%20value&AQE=1
 ```
 
-All values must be URL encoded. See the [variable reference](variable-reference.md) for every parameter, and the [FAQ](#faq) for encoding + length rules. You can send this payload as either a `GET` or a `POST`:
+All values must be URL encoded. See the [variable reference](variable-reference.md) for every parameter, and the [FAQ](#faq) for encoding + length rules. You can send this payload as either a `GET` or `POST` request:
 
 * **`GET`**: Append the payload to the endpoint as a query string to form a single URL.
 
@@ -84,7 +84,7 @@ All values must be URL encoded. See the [variable reference](variable-reference.
 
 <InlineAlert variant="info" slots="text"/>
 
-If you send a `POST` from a browser with `XMLHttpRequest` or `fetch`, include credentials ([`withCredentials = true`](https://developer.mozilla.org/en-US/docs/Web/API/XMLHttpRequest/withCredentials) or [`credentials: "include"`](https://developer.mozilla.org/en-US/docs/Web/API/Request/credentials)) so the request carries the visitor's Analytics opt-out cookie. The collection server is a different origin from your page, and browsers omit cookies on cross-origin `XMLHttpRequest`/`fetch` requests unless credentials are enabled. If credentials are not included, an opted-out visitor could still be tracked. A `GET` request from an `<img>` tag sends those cookies automatically, and a server-side `POST` has no visitor cookies to send.
+If you send a `POST` request from a browser with `XMLHttpRequest` or `fetch`, include credentials ([`withCredentials = true`](https://developer.mozilla.org/en-US/docs/Web/API/XMLHttpRequest/withCredentials) or [`credentials: "include"`](https://developer.mozilla.org/en-US/docs/Web/API/Request/credentials)) so the request carries the visitor's Analytics opt-out cookie. The collection server is a different origin from your page, and browsers omit cookies on cross-origin `XMLHttpRequest`/`fetch` requests unless credentials are enabled. If credentials are not included, an opted-out visitor could still be tracked. A `GET` request from an `<img>` tag sends those cookies automatically, and a server-side `POST` has no visitor cookies to send.
 
 ## XML
 

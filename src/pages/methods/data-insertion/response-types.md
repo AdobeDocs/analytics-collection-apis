@@ -7,6 +7,7 @@ keywords:
   - Status
   - Reason
   - Analytics data collection
+  - ECID
 ---
 
 # Data Insertion API response types
@@ -27,7 +28,7 @@ Returns a single space with a `text/html` content type, and `200 OK`. On a faile
 
 ### /1/: GIF (default)
 
-Returns a 1x1 transparent GIF (`image/gif`), and `200 OK`. Use this response type for `<img>` tag requests. AppMeasurement primarily uses this response type for both `GET` and `POST` requests. On `POST` validation failures it sets `Status` and `Reason` headers; `GET` validation surfaces Nothing, even when the hit is dropped.
+Returns a 1x1 transparent GIF (`image/gif`), and `200 OK`. Use this response type for `<img>` tag requests. AppMeasurement primarily uses this response type for both `GET` and `POST` requests. On `POST` validation failures it sets `Status` and `Reason` headers; `GET` validation surfaces nothing, even when the hit is dropped.
 
 <AccordionItem slots="heading, text"/>
 
@@ -39,7 +40,7 @@ Returns `204 No Content` with no body. It sets a `Status` header (`SUCCESS` or `
 
 ### /3/: JavaScript
 
-Returns a JavaScript response that assigns the visitor ID to a `s_vid` variable, so a browser can read the ID back after the beacon fires. This ID is the visitor's `s_vi` cookie value (the `aid` [variable](variable-reference.md)). On a `POST` validation failure it sets `Status` and `Reason` headers.
+Returns a JavaScript response that assigns the Analytics visitor ID to a `s_vid` variable, so the ID can be read after the beacon fires. This ID is the visitor's `s_vi` cookie value (the `aid` [variable](variable-reference.md)). This response type returns only the Analytics visitor ID, never the ECID (`mid`), so the `mid` and `mcorgid` parameters have no effect on it. A request identified only by an ECID resolves no Analytics visitor ID, so the response body is empty. On `POST` validation failure it sets `Status` and `Reason` headers.
 
 ```js
 var s_vid='355231C82E332200-4000195842CEFA67'
@@ -49,7 +50,7 @@ var s_vid='355231C82E332200-4000195842CEFA67'
 
 ### /4/: Partner redirect
 
-Used by select partner libraries, and only on a `GET`. Do not set it manually.
+Used by select partner libraries, and only on `GET` requests. Do not set it manually.
 
 <AccordionItem slots="heading, text"/>
 
@@ -61,30 +62,64 @@ An `image/wbmp` image, equivalent to `/1/` (GIF) for legacy `wbmp`-only clients.
 
 ### /6/: XML
 
-Returns an XML body with the hit status. This response type exclusively parses an XML request body (see [XML](request.md#xml)); it also mirrors the status and reason into `Status`/`Reason` headers, except for a `NO account` failure, which appears only in the body.
+Returns an XML body with the hit status. This response type exclusively parses an XML request body (see [XML](request.md#xml)). It also mirrors the status and reason into `Status`/`Reason` headers, except for a `NO account` failure, which appears only in the body.
 
 ```xml
 <?xml version="1.0" encoding="UTF-8"?>
 <status>SUCCESS</status>
 ```
 
-<AccordionItem slots="heading, text, code, text"/>
+<AccordionItem slots="heading, text, text, code"/>
 
 ### /10/: Visitor JSON
 
-Returns the hit status and visitor ID as JSON. When an Experience Cloud ID (`mid`) is available for the visitor, the response includes additional visitor information as well. AppMeasurement uses this response type when Audience Manager is included in your implementation.
+Returns the hit status and visitor identifiers as JSON. AppMeasurement uses this response type when Adobe Audience Manager is included in your implementation.
+
+The `id` is the visitor's `s_vi` cookie value (the `aid` [variable](variable-reference.md)). The response also returns the ECID (`mid`) as a 38-digit decimal string, but only when the request includes both a valid `mid` and `mcorgid` query parameters. If either component is missing, the server returns the `aid` alone. Status appears in the JSON body, not in headers, and a hit that fails validation returns without an `id`.
+
+<CodeBlock slots="heading, code" repeat="2" languages="JSON,JSON"/>
+
+#### With ECID
 
 ```json
-{"status":"SUCCESS","id":"355231C82E332200-4000195842CEFA67"}
+{
+  "status":"SUCCESS",
+  "mid":"79616681662205094719519402412079274310",
+  "id":"355231C82E332200-4000195842CEFA67"
+}
 ```
 
-The `id` is the visitor's `s_vi` cookie value (the `aid` [variable](variable-reference.md)). Status appears in the JSON body, not in headers; a hit that fails validation returns without an `id`.
+#### Analytics ID only
 
-<AccordionItem slots="heading, text, code, text"/>
+```json
+{
+  "status":"SUCCESS",
+  "id":"355231C82E332200-4000195842CEFA67"
+}
+```
+
+<AccordionItem slots="heading, text, text, code"/>
 
 ### /11/: Visitor XML
 
-The same visitor information as `/10/`, returned as XML.
+The same visitor identifiers as `/10/`, returned as XML. The `id` is the visitor's `s_vi` [cookie](https://experienceleague.adobe.com/en/docs/core-services/interface/data-collection/cookies/analytics) value (the `aid` [variable](variable-reference.md)), and the `mid` is the ECID as a 38-digit decimal string. The `mid` appears only when the request supplies both a valid `mid` and `mcorgid` as query parameters.
+
+Status appears in the `<visitor>` body, not in headers, and a hit that fails validation returns an empty `<visitor>` element. Reading it back is the basis of the server-side identity pattern in [Visitor identification using the Data Insertion API](https://experienceleague.adobe.com/en/docs/analytics/implementation/id/data-insertion).
+
+<CodeBlock slots="heading, code" repeat="2" languages="XML,XML"/>
+
+#### With ECID
+
+```xml
+<?xml version="1.0" encoding="UTF-8"?>
+<visitor>
+  <status>SUCCESS</status>
+  <mid>79616681662205094719519402412079274310</mid>
+  <id>355231C82E332200-4000195842CEFA67</id>
+</visitor>
+```
+
+#### Analytics ID only
 
 ```xml
 <?xml version="1.0" encoding="UTF-8"?>
@@ -93,8 +128,6 @@ The same visitor information as `/10/`, returned as XML.
   <id>355231C82E332200-4000195842CEFA67</id>
 </visitor>
 ```
-
-The `id` is the visitor's `s_vi` [cookie](https://experienceleague.adobe.com/en/docs/core-services/interface/data-collection/cookies/analytics) value (the `aid` [variable](variable-reference.md)). Status appears in the `<visitor>` body, not in headers; a hit that fails validation returns an empty `<visitor>` element. Reading it back is the basis of the server-side identity pattern in [Visitor identification using the Data Insertion API](https://experienceleague.adobe.com/en/docs/analytics/implementation/id/data-insertion).
 
 ## Validation and failures
 
