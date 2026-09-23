@@ -60,7 +60,7 @@ In the tables below, **Required** indicates whether the parameter is mandatory f
 | `media.rating` | N | string | `sessionStart` | The rating, as defined by TV Parental Guidelines. |
 | `media.originator` | N | string | `sessionStart` | The creator of the content. |
 | `media.network` | N | string | `sessionStart` | The network or channel name. |
-| `media.showType` | N | string | `sessionStart` | The type of content, expressed as an integer between 0 and 3:\<br/\>• `0`: Full episode\<br/\>• `1`: Preview\<br/\>• `2`: Clip\<br/\>• `3`: Other |
+| `media.showType` | N | string | `sessionStart` | The type of content, expressed as an integer between 0 and 3:\<ul\>\<li\>`0`: Full episode\</li\>\<li\>`1`: Preview\</li\>\<li\>`2`: Clip\</li\>\<li\>`3`: Other\</li\>\</ul\> |
 | `media.adLoad` | N | string | `sessionStart` | The type of ad loaded. |
 | `media.pass.mvpd` | N | string | `sessionStart` | The MVPD provided by Adobe Pass authentication. |
 | `media.pass.auth` | N | string | `sessionStart` | Indicates the user has been authorized by Adobe Pass authentication. Can only be `true` if set. |
