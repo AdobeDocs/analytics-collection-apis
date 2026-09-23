@@ -69,7 +69,7 @@ Returns an XML body with the hit status. This response type exclusively parses a
 <status>SUCCESS</status>
 ```
 
-<AccordionItem slots="heading, text, text, code"/>
+<AccordionItem slots="heading, text, text, heading, code, heading, code"/>
 
 ### /10/: Visitor JSON
 
@@ -96,7 +96,7 @@ The `id` is the visitor's `s_vi` cookie value (the `aid` [variable](variable-ref
 }
 ```
 
-<AccordionItem slots="heading, text, text, code"/>
+<AccordionItem slots="heading, text, text, heading, code, heading, code"/>
 
 ### /11/: Visitor XML
 
