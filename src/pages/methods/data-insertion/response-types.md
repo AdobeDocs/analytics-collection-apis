@@ -77,8 +77,6 @@ Returns the hit status and visitor identifiers as JSON. AppMeasurement uses this
 
 The `id` is the visitor's `s_vi` cookie value (the `aid` [variable](variable-reference.md)). The response also returns the ECID (`mid`) as a 38-digit decimal string, but only when the request includes both a valid `mid` and `mcorgid` query parameters. If either component is missing, the server returns the `aid` alone. Status appears in the JSON body, not in headers, and a hit that fails validation returns without an `id`.
 
-<CodeBlock slots="heading, code" repeat="2" languages="JSON,JSON"/>
-
 #### With ECID
 
 ```json
@@ -105,8 +103,6 @@ The `id` is the visitor's `s_vi` cookie value (the `aid` [variable](variable-ref
 The same visitor identifiers as `/10/`, returned as XML. The `id` is the visitor's `s_vi` [cookie](https://experienceleague.adobe.com/en/docs/core-services/interface/data-collection/cookies/analytics) value (the `aid` [variable](variable-reference.md)), and the `mid` is the ECID as a 38-digit decimal string. The `mid` appears only when the request supplies both a valid `mid` and `mcorgid` as query parameters.
 
 Status appears in the `<visitor>` body, not in headers, and a hit that fails validation returns an empty `<visitor>` element. Reading it back is the basis of the server-side identity pattern in [Visitor identification using the Data Insertion API](https://experienceleague.adobe.com/en/docs/analytics/implementation/id/data-insertion).
-
-<CodeBlock slots="heading, code" repeat="2" languages="XML,XML"/>
 
 #### With ECID
 
