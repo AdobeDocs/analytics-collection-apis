@@ -69,7 +69,7 @@ Returns an XML body with the hit status. This response type exclusively parses a
 <status>SUCCESS</status>
 ```
 
-<AccordionItem slots="heading, text, text, heading, code, heading, code"/>
+<AccordionItem slots="heading, text, text, text, code, text, code"/>
 
 ### /10/: Visitor JSON
 
@@ -77,7 +77,7 @@ Returns the hit status and visitor identifiers as JSON. AppMeasurement uses this
 
 The `id` is the visitor's `s_vi` cookie value (the `aid` [variable](variable-reference.md)). The response also returns the ECID (`mid`) as a 38-digit decimal string, but only when the request includes both a valid `mid` and `mcorgid` query parameters. If either component is missing, the server returns the `aid` alone. Status appears in the JSON body, not in headers, and a hit that fails validation returns without an `id`.
 
-#### With ECID
+**With ECID**
 
 ```json
 {
@@ -87,7 +87,7 @@ The `id` is the visitor's `s_vi` cookie value (the `aid` [variable](variable-ref
 }
 ```
 
-#### Analytics ID only
+**Analytics ID only**
 
 ```json
 {
@@ -96,7 +96,7 @@ The `id` is the visitor's `s_vi` cookie value (the `aid` [variable](variable-ref
 }
 ```
 
-<AccordionItem slots="heading, text, text, heading, code, heading, code"/>
+<AccordionItem slots="heading, text, text, text, code, text, code"/>
 
 ### /11/: Visitor XML
 
@@ -104,7 +104,7 @@ The same visitor identifiers as `/10/`, returned as XML. The `id` is the visitor
 
 Status appears in the `<visitor>` body, not in headers, and a hit that fails validation returns an empty `<visitor>` element. Reading it back is the basis of the server-side identity pattern in [Visitor identification using the Data Insertion API](https://experienceleague.adobe.com/en/docs/analytics/implementation/id/data-insertion).
 
-#### With ECID
+**With ECID**
 
 ```xml
 <?xml version="1.0" encoding="UTF-8"?>
@@ -115,7 +115,7 @@ Status appears in the `<visitor>` body, not in headers, and a hit that fails val
 </visitor>
 ```
 
-#### Analytics ID only
+**Analytics ID only**
 
 ```xml
 <?xml version="1.0" encoding="UTF-8"?>
