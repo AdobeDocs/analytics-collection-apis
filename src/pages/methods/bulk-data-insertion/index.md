@@ -13,10 +13,6 @@ Bulk Data Insertion solves several problems for a variety of use cases. Some use
 * An internal analytics collection system that makes it unfeasible to use AppMeasurement. You can use Extract-Transform-Load (ETL) processes to put data into batch files, then use BDIA to upload them to Adobe Analytics.
 * Data collection from devices that have only intermittent connectivity to the internet. These devices store up the interactions until they receive a connection. The device can then upload the data all at once through BDIA.
 
-<InlineAlert variant="info" slots="text"/>
-
-Adobe may add optional request and response members (name/value pairs) to existing API objects at any time and without notice or changes in versioning. Adobe recommends that you refer to the API documentation of any third-party tool you integrate with our APIs so that such additions are ignored in processing if not understood. If implemented properly, such additions are non-breaking changes for your implementation. Adobe will not remove parameters or add required parameters without first providing standard notification through release notes.
-
 ## When to use this API
 
 The Data Insertion API and Bulk Data Insertion API are both methods to submit server-side data to Adobe Analytics. Data Insertion API calls are made one event at a time, while the Bulk Data Insertion API accepts CSV-formatted files that contain event data, one event per row. As a bulk service, BDIA is optimized for larger files sent less frequently. If your use case requires sending more than one file per second, or you need to send events individually as they occur, use the [Data Insertion API](../data-insertion/index.md) instead. For a comparison across all Adobe Analytics collection methods, see the [collection method comparison](../../index.md#compare-each-method).

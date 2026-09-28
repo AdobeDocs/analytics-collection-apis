@@ -42,4 +42,8 @@ Analytics collection methods differ by volume, timing, authentication, and paylo
 * **Edge Network APIs**: For Edge Network collection, including the Media Edge API, see the [Data Collection APIs](https://developer.adobe.com/data-collection-apis/docs/).
 * **Data Sources**: To import offline or external data on a scheduled basis and tie it to existing Analytics data, see [Data Sources](https://experienceleague.adobe.com/en/docs/analytics/import/data-sources/overview) in the Analytics Import guide.
 
+<InlineAlert variant="info" slots="text"/>
+
+Adobe can add optional fields to API requests and responses at any time, without notice or a version change. Build your integration to ignore fields it doesn't recognize so that these additions don't break it. Adobe doesn't remove fields or add required fields without first announcing the change in release notes.
+
 This user guide adheres to Adobe's Code of Conduct. Contributions are encouraged and appreciated. See Adobe's [Code of Conduct](https://github.com/AdobeDocs/analytics-collection-apis/blob/main/CODE_OF_CONDUCT.md) and [Contribution Guidelines](https://github.com/AdobeDocs/analytics-collection-apis/blob/main/.github/CONTRIBUTING.md) on GitHub for more information.
