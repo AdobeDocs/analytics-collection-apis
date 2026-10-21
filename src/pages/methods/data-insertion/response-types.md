@@ -129,14 +129,7 @@ Status appears in the `<visitor>` body, not in headers, and a hit that fails val
 
 Whatever the response type, a `2xx` status confirms only that the request was *received*, not that the hit passed validation or appeared in reporting. How a failure is surfaced depends on the HTTP method and the response type: a failure **reason** is computed only for `POST` requests, so `GET` responses never return one. The surest confirmation is to inspect the request with a [packet monitor](https://experienceleague.adobe.com/en/docs/analytics/implementation/validate/packet-monitor) as you send it, or to check for the data in Adobe Analytics reporting.
 
-A failed hit reports one of the following reasons. The same reason string appears wherever the response type surfaces it; a `Reason` header, the `<reason>` XML element, or the JSON body.
-
-| Reason | Meaning |
-|---|---|
-| `NO account` | Missing the required report suite ID. |
-| `NO pagename OR pageurl` | Missing the required page name or page URL. |
-| `NO visitorid OR ipaddress` | Missing the required visitor identifier. |
-| `Syntax error` | Malformed XML, or a reserved character that was not encoded. |
+For what each failure reason means and how to resolve it, see [Troubleshooting](troubleshooting.md#hit-returns-a-failure-status).
 
 ### Statuses and reasons by response type
 
@@ -154,14 +147,3 @@ The reason value is the same everywhere; only the container differs by response 
 | `/10/` Visitor JSON | `status` in body | `status` in body | No headers; no `id` on failure. |
 | `/11/` Visitor XML | `<status>` in body | `<status>` in body | No headers; empty `<visitor>` on failure. |
 
-### Resolving failures
-
-If hits return `FAILURE`, check the following:
-
-* **Encoding.** When using XML encoding, make sure that the content is UTF-8 and that you're using a response type of `/6/`. When using query-string encoding, make sure that all values are properly URL-encoded.
-* **Reserved characters.** In XML, replace ampersands (`&`), greater-than (`>`), and less-than (`<`) with their entities when they appear inside a value. For example, submit `News & Sports <local>` as `News &amp; Sports &lt;local&gt;`. In query strings, these characters are handled by URL encoding.
-* **Required components.** Confirm that the hit includes a report suite ID, page context, and a visitor identifier. See [Required components](request.md#required-components).
-
-### POST request rejected
-
-Some HTTP clients add an `Expect: 100-Continue` header to `POST` requests, which Adobe data collection servers reject. The request fails before the body is processed, so no `FAILURE` body is returned. Disable the header in your client. For example, in .NET, set `ServicePointManager.Expect100Continue = false`.

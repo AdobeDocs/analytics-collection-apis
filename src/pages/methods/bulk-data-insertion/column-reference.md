@@ -41,6 +41,7 @@ Column header name | Description
 `hints.wow64` | [Client Hints](https://experienceleague.adobe.com/en/docs/experience-platform/edge/fundamentals/user-agent-client-hints): Boolean indicating if a 32-bit user-agent application is running on a 64-bit Windows machine.
 `ipaddress` | The visitor's IP address.
 `javaEnabled` | The [Java enabled](https://experienceleague.adobe.com/en/docs/analytics/components/dimensions/java-enabled) dimension.
+`javaScriptVersion` | The [JavaScript version](https://experienceleague.adobe.com/en/docs/analytics/components/dimensions/javascript-version) dimension.
 `language` | The [Language](https://experienceleague.adobe.com/en/docs/analytics/components/dimensions/language) dimension.
 `linkName` | The [Download link](https://experienceleague.adobe.com/en/docs/analytics/components/dimensions/download-link), [Exit link](https://experienceleague.adobe.com/en/docs/analytics/components/dimensions/exit-link), or [Custom link](https://experienceleague.adobe.com/en/docs/analytics/components/dimensions/custom-link) dimension, depending on the value in the `linkType` column. If this column contains a value, `pageName` is ignored.
 `linkType` | The type of link. Defaults to `o` (custom link) if this field is empty and `linkName` contains a value. Valid column values:\<ul\>\<li\>`d`: Download link\</li\>\<li\>`e`: Exit link\</li\>\<li\>`o`: Custom link\</li\>\</ul\>In the `queryString` column, use the query-string forms instead: `lnk_d`, `lnk_e`, or `lnk_o`.

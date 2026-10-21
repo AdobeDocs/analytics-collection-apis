@@ -139,25 +139,13 @@ Because you build each hit yourself, you set the visitor identifier rather than 
 
 ## FAQ
 
-Common questions about building hits directly.
+Common questions about building hits directly. For rejected, dropped, or incorrectly recorded hits, see [Troubleshooting](troubleshooting.md).
 
 <AccordionItem slots="heading, text"/>
 
 ### Is JSON supported?
 
 No. The Data Insertion API accepts data only as a URL-encoded query string or an XML body. To collect data as JSON, use the [Adobe Experience Platform Web SDK](https://experienceleague.adobe.com/en/docs/experience-platform/web-sdk/home) or the [Data Collection APIs](https://developer.adobe.com/data-collection-apis/docs/) instead.
-
-<AccordionItem slots="heading, text"/>
-
-### Are query string parameters case-sensitive?
-
-**Yes, query string parameters are case-sensitive.** Make sure that query string parameters exactly match, or else they are not recorded. For example, `pagename` is not a valid query string parameter, while `pageName` is.
-
-<AccordionItem slots="heading, text"/>
-
-### Are XML tags case-sensitive?
-
-**No, XML tags are not case-sensitive.** For example, `<pageName>`, `<pagename>`, and `<PAGENAME>` are all valid.
 
 <AccordionItem slots="heading, text, text"/>
 
@@ -166,18 +154,6 @@ No. The Data Insertion API accepts data only as a URL-encoded query string or an
 Values for each of the query string parameters are URL encoded. URL encoding converts characters that are normally illegal in URLs into legal characters. For example, a space character is converted into `%20`. Make sure that any character that is not alphanumeric is URL encoded. Adobe automatically URL decodes values when requests reach data collection servers.
 
 See [HTML URL Encoding Reference](https://www.w3schools.com/tags/ref_urlencode.asp) on W3Schools for more information on how URL encoding works.
-
-<AccordionItem slots="heading, text"/>
-
-### What is the maximum number of characters a single value can have?
-
-Each variable has a different maximum length. Most traffic variables hold up to 100 bytes, while most conversion variables hold up to 255 bytes. When a request reaches data collection servers, Adobe automatically truncates these values to their maximum length. See [Data column reference](https://experienceleague.adobe.com/en/docs/analytics/export/analytics-data-feed/data-feed-contents/datafeeds-reference) for a comprehensive list of data types for each variable.
-
-<AccordionItem slots="heading, text"/>
-
-### How long does data take to appear in reporting?
-
-Data submitted through the Data Insertion API follows the standard Adobe Analytics [latency](https://experienceleague.adobe.com/en/docs/analytics/technotes/latency) process.
 
 <AccordionItem slots="heading, text, text, text"/>
 

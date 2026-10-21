@@ -43,6 +43,7 @@ For the components every hit must include, see [Required components](request.md#
 | IMS organization | `mcorgid` | `<marketingCloudOrgId>` | The Adobe IMS Org, which identifies the organization to the Visitor ID Service. |
 | IP address | (HTTP header) | `<ipAddress>` | The visitor's IP address. When using query strings, the IP address comes from the request connection or the `X-Forwarded-For` header rather than a parameter. |
 | Java enabled | `v` | `<javaEnabled>` | The [Java enabled](https://experienceleague.adobe.com/en/docs/analytics/components/dimensions/java-enabled) dimension. |
+| JavaScript version | `j` | `<javaScriptVersion>` | The [JavaScript version](https://experienceleague.adobe.com/en/docs/analytics/components/dimensions/javascript-version) dimension, available only in Data Warehouse. |
 | Language | (HTTP header) | `<language>` | The [Language](https://experienceleague.adobe.com/en/docs/analytics/components/dimensions/language) dimension. When using query strings, language comes from the `Accept-Language` request header. |
 | Last request timing | `lrt` | — | The roundtrip time for the last request, in milliseconds. Sent by AppMeasurement only when more than one request is sent from a single page, such as a single-page application (SPA). |
 | Link name | `pev2` | `<linkName>` | The [Download link](https://experienceleague.adobe.com/en/docs/analytics/components/dimensions/download-link), [Exit link](https://experienceleague.adobe.com/en/docs/analytics/components/dimensions/exit-link), or [Custom link](https://experienceleague.adobe.com/en/docs/analytics/components/dimensions/custom-link) dimension, depending on the link type. If set, the page name is ignored. |
@@ -125,7 +126,6 @@ These variables are retained only for legacy compatibility and should not be use
 | Cookie domain periods | `cdp` | — | The `cookieDomainPeriods` implementation variable. |
 | Hierarchy | `h1` - `h5` | `<hier1>` - `<hier5>` | Hierarchy dimensions. |
 | Homepage flag | `hp` | `<homePage>` | Determined whether the current URL was the browser's homepage. |
-| JavaScript version | `j` | `<javaScriptVersion>` | The JavaScript version installed in the browser. |
 | Latitude | `lat` | `<latitude>` | Latitude, set by legacy mobile SDK implementations. |
 | Longitude | `lon` | `<longitude>` | Longitude, set by legacy mobile SDK implementations. |
 | Plug-ins | `p` | `<plugins>` | List of browser plug-in names. |

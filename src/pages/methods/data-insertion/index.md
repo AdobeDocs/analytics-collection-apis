@@ -39,4 +39,5 @@ Learn how to expand on this API:
 * [Build a request](request.md): Contains the endpoint structure and required components for both query-string and XML encodings.
 * [Response types](response-types.md): Response formats and how to read validation failures
 * [Variable reference](variable-reference.md): Comprehensive table of every supported variable.
+* [Troubleshooting](troubleshooting.md): HTTP response codes, failure reasons, and causes of dropped or incorrectly recorded hits.
 * [Visitor identification](https://experienceleague.adobe.com/en/docs/analytics/implementation/id/data-insertion): Learn the ideal architecture to manage visitor identification in the Analytics implementation guide.
