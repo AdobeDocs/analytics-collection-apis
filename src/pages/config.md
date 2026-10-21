@@ -17,6 +17,7 @@
         - [Build a request](methods/data-insertion/request.md)
         - [Response types](methods/data-insertion/response-types.md)
         - [Variable reference](methods/data-insertion/variable-reference.md)
+        - [Troubleshooting](methods/data-insertion/troubleshooting.md)
     - [Bulk Data Insertion API](methods/bulk-data-insertion/index.md)
         - [Authentication](methods/bulk-data-insertion/authentication.md)
         - [Endpoints](methods/bulk-data-insertion/endpoints.md)
