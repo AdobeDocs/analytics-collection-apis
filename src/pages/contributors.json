@@ -1,7 +1,7 @@
 {
-  "total": 23,
+  "total": 24,
   "offset": 0,
-  "limit": 23,
+  "limit": 24,
   "data": [
     {
       "page": "/",
@@ -32,7 +32,7 @@
         "https://avatars.githubusercontent.com/u/33764851?v=4",
         "https://avatars.githubusercontent.com/u/41382203?v=4"
       ],
-      "lastUpdated": "9/15/2026"
+      "lastUpdated": "10/21/2026"
     },
     {
       "page": "/methods/bulk-data-insertion/",
@@ -53,7 +53,7 @@
       "avatars": [
         "https://avatars.githubusercontent.com/u/33764851?v=4"
       ],
-      "lastUpdated": "9/23/2026"
+      "lastUpdated": "10/21/2026"
     },
     {
       "page": "/methods/bulk-data-insertion/customer-id",
@@ -95,28 +95,35 @@
       "avatars": [
         "https://avatars.githubusercontent.com/u/33764851?v=4"
       ],
-      "lastUpdated": "9/15/2026"
+      "lastUpdated": "10/21/2026"
     },
     {
       "page": "/methods/data-insertion/request",
       "avatars": [
         "https://avatars.githubusercontent.com/u/33764851?v=4"
       ],
-      "lastUpdated": "9/22/2026"
+      "lastUpdated": "10/21/2026"
     },
     {
       "page": "/methods/data-insertion/response-types",
       "avatars": [
         "https://avatars.githubusercontent.com/u/33764851?v=4"
       ],
-      "lastUpdated": "9/24/2026"
+      "lastUpdated": "10/21/2026"
+    },
+    {
+      "page": "/methods/data-insertion/troubleshooting",
+      "avatars": [
+        "https://avatars.githubusercontent.com/u/33764851?v=4"
+      ],
+      "lastUpdated": "10/21/2026"
     },
     {
       "page": "/methods/data-insertion/variable-reference",
       "avatars": [
         "https://avatars.githubusercontent.com/u/33764851?v=4"
       ],
-      "lastUpdated": "9/23/2026"
+      "lastUpdated": "10/21/2026"
     },
     {
       "page": "/methods/media-collection/",
